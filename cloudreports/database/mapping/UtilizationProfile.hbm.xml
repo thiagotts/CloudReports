@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cloudreports.models.UtilizationProfile" table="UtilizationProfiles">
+    <id column="Id" name="id" type="long">
+      <generator class="native"/>
+    </id>
+    <property column="BrokerPolicy" name="brokerPolicyAlias" type="string"/>
+    <property column="NumOfCloudlets" name="numOfCloudlets" type="integer"/>
+    <property column="Length" name="length" type="long"/>
+    <property column="FileSize" name="fileSize" type="long"/>
+    <property column="OutputSize" name="outputSize" type="long"/>
+    <property column="CloudletsPesNumber" name="cloudletsPesNumber" type="integer"/>
+    <property column="CPUUtilizationModel" name="utilizationModelCpuAlias" type="string"/>
+    <property column="RamUtilizationModel" name="utilizationModelRamAlias" type="string"/>
+    <property column="BwUtilizationModel" name="utilizationModelBwAlias" type="string"/>
+    <property column="TimeToSend" name="timeToSend" type="double"/>
+  </class>
+</hibernate-mapping>

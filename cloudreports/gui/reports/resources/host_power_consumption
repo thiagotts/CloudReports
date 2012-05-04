@@ -1,0 +1,40 @@
+
+<div id="power_consumption_<!--INSERT_DATACENTER_NAME-->_<!--INSERT_HOST_NAME-->" style="display: none;">					
+			<center>
+
+				<table border="0" id="table_graph_power_consumption_<!--INSERT_DATACENTER_NAME-->_<!--INSERT_HOST_NAME-->">
+				<tr>
+				<td><center><p class="ylabel">Power (kW)</p></center></td>
+				<td><div id="graph_power_consumption_<!--INSERT_DATACENTER_NAME-->_<!--INSERT_HOST_NAME-->" style="width:600px;height:300px"></div></td>
+				</tr>
+				<tr>
+				<td></td>
+				<td><center>Time (minutes)</center></td>
+				</tr>
+				</table> 
+
+				<input type="checkbox" id="white_background_graph_power_consumption_<!--INSERT_DATACENTER_NAME-->_<!--INSERT_HOST_NAME-->" onClick="toggleBackground('table_graph_power_consumption_<!--INSERT_DATACENTER_NAME-->_<!--INSERT_HOST_NAME-->');"><label for="white_background_graph_power_consumption_<!--INSERT_DATACENTER_NAME-->_<!--INSERT_HOST_NAME-->">White background</label>
+				<p>This graph shows the power consumption on <!--INSERT_HOST_NAME-->.</p>
+			</center>
+ 
+<script type="text/javascript"> 
+$(function () {
+    var pc_<!--INSERT_HOST_NAME--> = <!--INSERT_POWER_CONSUMPTION_DATA-->;
+    var placeholder = $("#graph_power_consumption_<!--INSERT_DATACENTER_NAME-->_<!--INSERT_HOST_NAME-->");
+    var options = {
+	 series: {
+	     lines: { show: true, fill: true }
+	 },
+         zoom: {
+             interactive: true
+         },
+         pan: {
+             interactive: true
+         }
+    };
+ 
+    $.plot(placeholder, [{data: pc_<!--INSERT_HOST_NAME-->}], options);
+});
+</script> 
+
+</div> <!-- end of power_consumption_<!--INSERT_DATACENTER_NAME-->_<!--INSERT_HOST_NAME--> -->

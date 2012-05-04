@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cloudreports.models.ReportData" table="ReportData">
+    <id column="Id" name="id" type="long">
+      <generator class="native"/>
+    </id>
+    <property column="SimulationId" name="simulationId" type="integer"/>
+    <property column="Type" name="type" type="string"/>
+    <property column="DatacenterName" name="datacenterName" type="string"/>
+    <property column="CustomerName" name="customerName" type="string"/>
+    <property column="VmId" name="vmId" type="integer"/>
+    <property column="HostId" name="hostId" type="integer"/>
+    <property column="Time" name="time" type="double"/>
+    <property column="Amount" name="amount" type="double"/>
+  </class>
+</hibernate-mapping>

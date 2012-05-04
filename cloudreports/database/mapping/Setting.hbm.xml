@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cloudreports.models.Setting" table="Settings">
+        <id column="Id" name="id" type="long">
+            <generator class="native"/>
+        </id>
+        <property column="Name" name="name" type="string"/>
+        <property column="Value" name="value" type="string"/>
+  </class>
+</hibernate-mapping>

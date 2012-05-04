@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cloudreports.models.HostRegistry" table="Hosts">
+    <id column="Id" name="id" type="long">
+      <generator class="native"/>
+    </id>
+    <property column="VmScheduler" name="schedulingPolicyAlias" type="string"/>
+    <property column="NumOfPes" name="numOfPes" type="integer"/>
+    <property column="MipsPerPe" name="mipsPerPe" type="double"/>
+    <property column="MaxPower" name="maxPower" type="double"/>
+    <property column="StaticPowerPercent" name="staticPowerPercent" type="double"/>
+    <property column="PowerModel" name="powerModelAlias" type="string"/>
+    <property column="Ram" name="ram" type="integer"/>
+    <property column="RamProvisioner" name="ramProvisionerAlias" type="string"/>
+    <property column="Bandwidth" name="bw" type="integer"/>
+    <property column="BwProvisioner" name="bwProvisionerAlias" type="string"/>
+    <property column="Amount" name="amount" type="integer"/>
+    <property column="Storage" name="storage" type="long"/>
+    <property column="PeProvisioner" name="peProvisionerAlias" type="string"/>
+  </class>
+</hibernate-mapping>

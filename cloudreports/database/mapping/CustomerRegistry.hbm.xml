@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cloudreports.models.CustomerRegistry" table="Customers">
+    <id column="Id" name="id" type="long">
+      <generator class="native"/>
+    </id>
+    <property column="Name" name="name" type="string"/>
+    <one-to-one cascade="all" class="cloudreports.models.UtilizationProfile" name="utilizationProfile"/>
+    <list cascade="all-delete-orphan" lazy="false" name="vmList">
+      <key column="CustomerId"/>
+      <index column="Indx"/>
+      <one-to-many class="cloudreports.models.VirtualMachineRegistry"/>
+    </list>
+  </class>
+</hibernate-mapping>

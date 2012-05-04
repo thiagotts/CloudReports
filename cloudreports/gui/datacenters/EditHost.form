@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="0"/>
+    <Property name="title" type="java.lang.String" value="Edit Host"/>
+    <Property name="modal" type="boolean" value="true"/>
+    <Property name="resizable" type="boolean" value="false"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+                  <Component id="okButton" alignment="1" min="-2" pref="82" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="okButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JButton" name="okButton">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/cloudreports/gui/resources/ok.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="OK"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="okButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Container class="javax.swing.JPanel" name="jPanel1">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Settings"/>
+          </Border>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="bwLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="amountLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="ramLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="ramSpinner" linkSize="3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="bwSpinner" linkSize="3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="amountSpinner" linkSize="3" alignment="0" min="-2" pref="86" max="-2" attributes="0"/>
+                              <Component id="storageSpinner" linkSize="3" alignment="0" max="32767" attributes="1"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="storageLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Group type="102" alignment="0" attributes="1">
+                                      <Component id="maxPowerLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                                      <Component id="maxPowerSpinner" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="sppLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="sppSinner" min="-2" pref="76" max="-2" attributes="1"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="1">
+                                      <Component id="pesLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="pesSpinner" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="ramProvLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="bwProvLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="schedulingLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="pmLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="mipsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="peProvisionerLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="peProvisionerBox" alignment="0" pref="149" max="32767" attributes="0"/>
+                      <Component id="schedulingBox" pref="149" max="32767" attributes="1"/>
+                      <Component id="pmBox" pref="149" max="32767" attributes="1"/>
+                      <Component id="ramProvBox" alignment="0" pref="149" max="32767" attributes="1"/>
+                      <Component id="bwProvBox" alignment="0" pref="149" max="32767" attributes="1"/>
+                      <Component id="mipsSpinner" alignment="0" pref="149" max="32767" attributes="1"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="2" attributes="0">
+                      <Component id="amountLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="amountSpinner" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="mipsLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="mipsSpinner" alignment="2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="2" attributes="0">
+                      <Component id="ramLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="ramSpinner" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="schedulingLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="schedulingBox" alignment="2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="2" attributes="0">
+                      <Component id="bwLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="bwSpinner" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="pmLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="pmBox" alignment="2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="2" attributes="0">
+                      <Component id="storageLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="storageSpinner" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="ramProvLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="ramProvBox" alignment="2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="2" attributes="0">
+                      <Component id="maxPowerLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="maxPowerSpinner" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="bwProvLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="bwProvBox" alignment="2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="2" attributes="0">
+                      <Component id="sppLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="sppSinner" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="peProvisionerLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="peProvisionerBox" alignment="2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="pesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="pesSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="amountLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Amount:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="amountSpinner">
+          <Properties>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="amountSpinnerStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="schedulingLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="VM scheduling:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="pesLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Processing elements:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="mipsLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="MIPS/PE:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="maxPowerLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Maximum power:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="sppLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Static power percent:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="pmLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Power model:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="ramLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="RAM:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="pesSpinner">
+          <Properties>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="pesSpinnerStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="schedulingBox">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.DefaultComboBoxModel(VmScheduler.getVmSchedulerNames())" type="code"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="schedulingBoxItemStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="mipsSpinner">
+          <Properties>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="10.0" minimum="10.0" numberType="java.lang.Double" stepSize="10.0" type="number"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mipsSpinnerStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="maxPowerSpinner">
+          <Properties>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="10.0" minimum="10.0" numberType="java.lang.Double" stepSize="10.0" type="number"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="maxPowerSpinnerStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="sppSinner">
+          <Properties>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="0.0" maximum="1.0" minimum="0.0" numberType="java.lang.Double" stepSize="0.05" type="number"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sppSinnerStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="pmBox">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.DefaultComboBoxModel(PowerModel.getPowerModelNames())" type="code"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="pmBoxItemStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="ramSpinner">
+          <Properties>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="32" minimum="32" numberType="java.lang.Integer" stepSize="16" type="number"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="ramSpinnerStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="ramProvLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="RAM Provisioner:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="ramProvBox">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.DefaultComboBoxModel(RamProvisioner.getRamProvisionerNames())" type="code"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ramProvBoxItemStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="bwProvLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Bandwidth Provisioner:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="bwProvBox">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.DefaultComboBoxModel(BwProvisioner.getBwProvisionerNames())" type="code"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="bwProvBoxItemStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="bwLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Bandwidth:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="bwSpinner">
+          <Properties>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="100" minimum="10" numberType="java.lang.Integer" stepSize="10" type="number"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="bwSpinnerStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="storageLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Storage:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="storageSpinner">
+          <Properties>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="0" minimum="0" numberType="java.lang.Long" stepSize="1" type="number"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="storageSpinnerStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="peProvisionerLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="PE Provisioner:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="peProvisionerBox">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.DefaultComboBoxModel(PeProvisioner.getPeProvisionerNames())" type="code"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="peProvisionerBoxItemStateChanged"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>

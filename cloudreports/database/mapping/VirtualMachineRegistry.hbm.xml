@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cloudreports.models.VirtualMachineRegistry" table="VirtualMachines">
+    <id column="Id" name="id" type="long">
+      <generator class="native"/>
+    </id>
+    <property column="Size" name="size" type="long"/>
+    <property column="PesNumber" name="pesNumber" type="integer"/>
+    <property column="MIPS" name="mips" type="double"/>
+    <property column="Ram" name="ram" type="integer"/>
+    <property column="Bandwidth" name="bw" type="long"/>
+    <property column="Priority" name="priority" type="integer"/>
+    <property column="Hypervisor" name="vmm" type="string"/>
+    <property column="SchedulingPolicy" name="schedulingPolicyAlias" type="string"/>
+    <property column="Amount" name="amount" type="integer"/>
+  </class>
+</hibernate-mapping>

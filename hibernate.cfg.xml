@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
+    <property name="hibernate.connection.url">jdbc:sqlite:db/NewEnvironment.cre</property>
+    <property name="hibernate.show_sql">false</property>
+    <property name="hibernate.format_sql">false</property>
+    <property name="hibernate.dialect">cloudreports.database.SQLiteDialect</property>
+    <property name="hibernate.generate_statistics">false</property>
+    <property name="hibernate.use_sql_comments">false</property>
+    <mapping resource="cloudreports/database/mapping/CustomerRegistry.hbm.xml"/>
+    <mapping resource="cloudreports/database/mapping/DatacenterRegistry.hbm.xml"/>
+    <mapping resource="cloudreports/database/mapping/HostRegistry.hbm.xml"/>
+    <mapping resource="cloudreports/database/mapping/SanStorageRegistry.hbm.xml"/>
+    <mapping resource="cloudreports/database/mapping/UtilizationProfile.hbm.xml"/>
+    <mapping resource="cloudreports/database/mapping/VirtualMachineRegistry.hbm.xml"/>
+    <mapping resource="cloudreports/database/mapping/NetworkMapEntry.hbm.xml"/>
+    <mapping resource="cloudreports/database/mapping/ReportData.hbm.xml"/>
+    <mapping resource="cloudreports/database/mapping/RandomNumber.hbm.xml"/>
+    <mapping resource="cloudreports/database/mapping/Migration.hbm.xml"/>
+    <mapping resource="cloudreports/database/mapping/Setting.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

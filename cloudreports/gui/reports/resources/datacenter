@@ -1,0 +1,314 @@
+
+<div id="datacenter_<!--INSERT_DATACENTER_NAME-->" style="display: none;">
+
+<div id="content">
+        
+		<h1><a style="cursor: pointer;" onclick="toggleDiv('resource_utilization_<!--INSERT_DATACENTER_NAME-->','slow');">Resource utilization <img src="../images/up.png" alt="arrow" class="resource_utilization_<!--INSERT_DATACENTER_NAME-->"/></a></h1>  
+
+		<div id="resource_utilization_<!--INSERT_DATACENTER_NAME-->">			
+			<p>Select the source:
+					<select id="select_resource_utilization_<!--INSERT_DATACENTER_NAME-->" onFocus="previousOption=$(this).attr('value');" onchange="newOption=$(this).attr('value');changeOption(newOption, previousOption); previousOption=newOption;">
+					  <option value="resource_utilization_<!--INSERT_DATACENTER_NAME-->_overall">Overall</option>
+					  <!--INSERT_HOST_RESOURCE_UTILIZATION_OPTIONS-->
+					</select>	
+			</p>
+
+			<div id="resource_utilization_<!--INSERT_DATACENTER_NAME-->_overall">					
+			<center>
+				<div id="checkboxes_graph_resource_utilization_<!--INSERT_DATACENTER_NAME-->_overall"></div>
+
+				<table border="0" id="table_graph_resource_utilization_<!--INSERT_DATACENTER_NAME-->_overall">
+				<tr>
+				<td><center><p class="ylabel">Resources</p></center></td>
+				<td><div id="graph_resource_utilization_<!--INSERT_DATACENTER_NAME-->_overall" style="width:600px;height:300px"></div></td>
+				</tr>
+				<tr>
+				<td></td>
+				<td><center>Time (minutes)</center></td>
+				</tr>
+				</table> 				
+
+				<input type="checkbox" id="white_background_graph_resource_utilization_<!--INSERT_DATACENTER_NAME-->_overall" onClick="toggleBackground('table_graph_resource_utilization_<!--INSERT_DATACENTER_NAME-->_overall');"><label for="white_background_graph_resource_utilization_<!--INSERT_DATACENTER_NAME-->_overall">White background</label>
+				<p>This graph shows the overall resource utilization on this datacenter.</p>
+			</center>
+ 
+<script type="text/javascript"> 
+$(function () {
+    var datasets = {
+        "CPU": {
+            label: "CPU (MIPS)",
+            data: <!--INSERT_OVERALL_CPU_DATA-->
+        },        
+        "RAM": {
+            label: "RAM (MB)",
+            data: <!--INSERT_OVERALL_RAM_DATA-->
+        },
+        "Bandwidth": {
+            label: "Bandwidth (Mbps)",
+            data: <!--INSERT_OVERALL_BANDWIDTH_DATA-->
+        }
+    };
+
+    var i = 0;
+    $.each(datasets, function(key, val) {
+        val.color = i;
+        ++i;
+    });
+    
+    var choiceContainer = $("#checkboxes_graph_resource_utilization_<!--INSERT_DATACENTER_NAME-->_overall");
+    $.each(datasets, function(key, val) {
+        choiceContainer.append('<input type="checkbox" name="' + key +
+                               '" checked="checked" id="id' + key + '">' +
+                               '<label for="id' + key + '">'
+                                + val.label + '</label>');
+    });
+    choiceContainer.find("input").click(plotAccordingToChoices);
+
+    function plotAccordingToChoices() {
+        var data = [];
+	var placeholder = $("#graph_resource_utilization_<!--INSERT_DATACENTER_NAME-->_overall");
+	var options = {
+	 series: {
+	     lines: { show: true }
+	 },
+         zoom: {
+             interactive: true
+         },
+         pan: {
+             interactive: true
+         }
+        };
+ 
+        choiceContainer.find("input:checked").each(function () {
+            var key = $(this).attr("name");
+            if (key && datasets[key])
+                data.push(datasets[key]);
+        });
+ 
+        if (data.length > 0)
+            $.plot(placeholder, data, options);
+    }
+ 
+    plotAccordingToChoices();
+
+});
+</script> 
+		</div>	<!-- end of resource_utilization_<!--INSERT_DATACENTER_NAME-->_overall -->
+
+		<!--INSERT_HOST_RESOURCE_UTILIZATION_LIST-->
+
+		</div> <!-- end of resource_utilization_<!--INSERT_DATACENTER_NAME--> -->
+	</div> <!-- end of content -->
+
+	
+
+	<div id="content">
+        
+		<h1><a style="cursor: pointer;" onclick="toggleDiv('power_consumption_<!--INSERT_DATACENTER_NAME-->','slow');">Power Consumption <img src="../images/up.png" alt="arrow" class="power_consumption_<!--INSERT_DATACENTER_NAME-->"/></a></h1>  
+
+		<div id="power_consumption_<!--INSERT_DATACENTER_NAME-->">			
+			<p>Select the source:
+					<select id="select_power_consumption_<!--INSERT_DATACENTER_NAME-->" onFocus="previousOption=$(this).attr('value');" onchange="newOption=$(this).attr('value');changeOption(newOption, previousOption); previousOption=newOption;">
+					  <option value="power_consumption_<!--INSERT_DATACENTER_NAME-->_overall">Overall</option>
+					  <!--INSERT_HOST_POWER_CONSUMPTION_OPTIONS-->
+					</select>	
+			</p>	
+			
+			<div id="power_consumption_<!--INSERT_DATACENTER_NAME-->_overall">					
+			<center>
+
+				<table border="0" id="table_graph_power_consumption_<!--INSERT_DATACENTER_NAME-->_overall">
+				<tr>
+				<td><center><p class="ylabel">Power (kW)</p></center></td>
+				<td><div id="graph_power_consumption_<!--INSERT_DATACENTER_NAME-->_overall" style="width:600px;height:300px"></div></td>
+				</tr>
+				<tr>
+				<td></td>
+				<td><center>Time (minutes)</center></td>
+				</tr>
+				</table> 	
+
+				<input type="checkbox" id="white_background_graph_power_consumption_<!--INSERT_DATACENTER_NAME-->_overall" onClick="toggleBackground('table_graph_power_consumption_<!--INSERT_DATACENTER_NAME-->_overall');"><label for="white_background_graph_power_consumption_<!--INSERT_DATACENTER_NAME-->_overall">White background</label>
+				<p>This graph shows the overall power consumption on this datacenter.</p>
+			</center>
+ 
+<script type="text/javascript"> 
+$(function () {
+    var pc_overall = <!--INSERT_OVERALL_POWER_CONSUMPTION_DATA-->;
+    var placeholder = $("#graph_power_consumption_<!--INSERT_DATACENTER_NAME-->_overall");
+    var options = {
+	 series: {
+	     lines: { show: true, fill: true }
+	 },
+         zoom: {
+             interactive: true
+         },
+         pan: {
+             interactive: true
+         }
+    };
+ 
+    $.plot(placeholder, [{data: pc_overall}], options);
+});
+</script> 
+			</div> <!-- end of power_consumption_<!--INSERT_DATACENTER_NAME-->_overall -->
+
+			<!--INSERT_HOST_POWER_CONSUMPTION_LIST-->
+
+		</div> <!-- end of power_consumption_<!--INSERT_DATACENTER_NAME--> -->
+	</div> <!-- end of content -->
+        
+	<div id="content">
+        
+		<h1><a style="cursor: pointer;" onclick="toggleDiv('migrations_<!--INSERT_DATACENTER_NAME-->','slow');">Migrations <img src="../images/up.png" alt="arrow" class="migrations_<!--INSERT_DATACENTER_NAME-->"/></a></h1>  
+
+		<div id="migrations_<!--INSERT_DATACENTER_NAME-->">
+
+			<!--INSERT_MIGRATIONS_DATA-->
+
+		</div> <!-- end of migrations_<!--INSERT_DATACENTER_NAME--> -->
+	</div> <!-- end of content -->
+
+	<div id="content">
+        
+		<h1><a style="cursor: pointer;" onclick="toggleDiv('virtual_machines_<!--INSERT_DATACENTER_NAME-->','slow');">Virtual Machines <img src="../images/up.png" alt="arrow" class="virtual_machines_<!--INSERT_DATACENTER_NAME-->"/></a></h1>  
+
+		<div id="virtual_machines_<!--INSERT_DATACENTER_NAME-->">
+			<center>
+
+				<table border="0" id="table_graph_virtual_machines_<!--INSERT_DATACENTER_NAME-->">
+				<tr>
+				<td><center><p class="ylabel">Virtual Machines</p></center></td>
+				<td><div id="graph_virtual_machines_<!--INSERT_DATACENTER_NAME-->" style="width:600px;height:300px"></div></td>
+				</tr>
+				<tr>
+				<td></td>
+				<td></td>
+				</tr>
+				</table> 	
+
+				<input type="checkbox" id="white_background_graph_virtual_machines_<!--INSERT_DATACENTER_NAME-->" onClick="toggleBackground('table_graph_virtual_machines_<!--INSERT_DATACENTER_NAME-->');"><label for="white_background_graph_virtual_machines_<!--INSERT_DATACENTER_NAME-->">White background</label>
+				<p>This graph shows how many virtual machines have been sucessfully allocated on this datacenter by each customer.</p>
+			</center>
+ 
+<script type="text/javascript"> 
+$(function () {
+    var placeholder = $("#graph_virtual_machines_<!--INSERT_DATACENTER_NAME-->");
+    var options = {
+	 series: {
+            bars: { show: true }
+	 },
+        zoom: {
+            interactive: true
+        },
+        pan: {
+            interactive: true
+        },
+	xaxis: {
+    	    show: false
+	}
+    };
+
+    $.plot(placeholder, <!--INSERT_VIRTUAL_MACHINES_DATA-->, options);
+
+});
+</script> 
+		</div> <!-- end of virtual_machines_<!--INSERT_DATACENTER_NAME--> -->
+	</div> <!-- end of content -->
+
+	<div id="content">
+        
+		<h1><a style="cursor: pointer;" onclick="toggleDiv('cloudlets_<!--INSERT_DATACENTER_NAME-->','slow');">Cloudlets <img src="../images/up.png" alt="arrow" class="cloudlets_<!--INSERT_DATACENTER_NAME-->"/></a></h1>  
+
+		<div id="cloudlets_<!--INSERT_DATACENTER_NAME-->">
+			<center>
+
+				<table border="0" id="table_graph_cloudlets_<!--INSERT_DATACENTER_NAME-->">
+				<tr>
+				<td><center><p class="ylabel">Cloudlets</p></center></td>
+				<td><div id="graph_cloudlets_<!--INSERT_DATACENTER_NAME-->" style="width:600px;height:300px"></div></td>
+				</tr>
+				<tr>
+				<td></td>
+				<td></td>
+				</tr>
+				</table> 
+
+				<input type="checkbox" id="white_background_graph_cloudlets_<!--INSERT_DATACENTER_NAME-->" onClick="toggleBackground('table_graph_cloudlets_<!--INSERT_DATACENTER_NAME-->');"><label for="white_background_graph_cloudlets_<!--INSERT_DATACENTER_NAME-->">White background</label>
+				<p>This graph shows how many cloudlets have been sucessfully executed on this datacenter by each customer.</p>
+			</center>
+ 
+<script type="text/javascript"> 
+$(function () {
+    var placeholder = $("#graph_cloudlets_<!--INSERT_DATACENTER_NAME-->");
+    var options = {
+	 series: {
+            bars: { show: true }
+	 },
+        zoom: {
+            interactive: true
+        },
+        pan: {
+            interactive: true
+        },
+	xaxis: {
+    	    show: false
+	}
+    };
+
+    $.plot(placeholder, <!--INSERT_CLOUDLETS_DATA-->, options);
+
+});
+</script> 
+		</div> <!-- end of cloudlets_<!--INSERT_DATACENTER_NAME--> -->
+	</div> <!-- end of content -->
+
+
+	<div id="content">
+        
+		<h1><a style="cursor: pointer;" onclick="toggleDiv('costs_<!--INSERT_DATACENTER_NAME-->','slow');">Costs <img src="../images/up.png" alt="arrow" class="costs_<!--INSERT_DATACENTER_NAME-->"/></a></h1>  
+
+		<div id="costs_<!--INSERT_DATACENTER_NAME-->">
+			<center>
+
+				<table border="0" id="table_graph_costs_<!--INSERT_DATACENTER_NAME-->">
+				<tr>
+				<td><center><p class="ylabel">Costs (m.u.)</p></center></td>
+				<td><div id="graph_costs_<!--INSERT_DATACENTER_NAME-->" style="width:600px;height:300px"></div></td>
+				</tr>
+				<tr>
+				<td></td>
+				<td></td>
+				</tr>
+				</table> 
+
+				<input type="checkbox" id="white_background_graph_costs_<!--INSERT_DATACENTER_NAME-->" onClick="toggleBackground('table_graph_costs_<!--INSERT_DATACENTER_NAME-->');"><label for="white_background_graph_costs_<!--INSERT_DATACENTER_NAME-->">White background</label>
+				<p>This graph shows the monetary costs generated by each customer based on their resource utilization on this datacenter.</p>
+			</center>
+ 
+<script type="text/javascript"> 
+$(function () {
+    var placeholder = $("#graph_costs_<!--INSERT_DATACENTER_NAME-->");
+    var options = {
+	 series: {
+            bars: { show: true }
+	 },
+        zoom: {
+            interactive: true
+        },
+        pan: {
+            interactive: true
+        },
+	xaxis: {
+    	    show: false
+	}
+    };
+
+    $.plot(placeholder, <!--INSERT_COSTS_DATA-->, options);
+
+});
+</script> 
+		</div> <!-- end of costs_<!--INSERT_DATACENTER_NAME--> -->
+	</div> <!-- end of content -->
+
+</div> <!-- end of datacenter_<!--INSERT_DATACENTER_NAME--> -->

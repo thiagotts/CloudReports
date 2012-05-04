@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cloudreports.models.Migration" table="Migrations">
+        <id column="Id" name="id" type="long">
+            <generator class="native"/>
+        </id>
+        <property column="SimulationId" name="simulationId" type="integer"/>
+        <property column="Description" name="description" type="string"/>
+        <property column="Time" name="time" type="double"/>
+        <property column="TargetHost" name="targetHostLabel" type="string"/>
+        <property column="SourceHost" name="sourceHostLabel" type="string"/>
+        <property column="Vm" name="vmLabel" type="string"/>  
+        <property column="DatacenterName" name="datacenterName" type="string"/>  
+        <property column="SourceHostCpuUtilization" name="sourceHostCpuUtilization" type="double"/>
+        <property column="SourceHostRamUtilization" name="sourceHostRamUtilization" type="double"/>
+        <property column="SourceHostPowerConsumption" name="sourceHostPowerConsumption" type="double"/>
+        <property column="TargetHostCpuUtilization" name="targetHostCpuUtilization" type="double"/>
+        <property column="TargetHostRamUtilization" name="targetHostRamUtilization" type="double"/>
+        <property column="TargetHostPowerConsumption" name="targetHostPowerConsumption" type="double"/>
+  </class>
+</hibernate-mapping>

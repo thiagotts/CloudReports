@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cloudreports.models.DatacenterRegistry" table="Datacenters">
+    <id column="Id" name="id" type="long">
+      <generator class="native"/>
+    </id>
+    <property column="Name" name="name" type="string"/>
+    <property column="Architecture" name="architecture" type="string"/>
+    <property column="OS" name="os" type="string"/>
+    <property column="Hypervisor" name="vmm" type="string"/>
+    <property column="TimeZone" name="timeZone" type="double"/>
+    <property column="AllocationPolicy" name="allocationPolicyAlias" type="string"/>
+    <property column="VmMigration" name="vmMigration" type="boolean"/>
+    <property column="CostPerSec" name="costPerSec" type="double"/>
+    <property column="CostPerMem" name="costPerMem" type="double"/>
+    <property column="CostPerStorage" name="costPerStorage" type="double"/>
+    <property column="CostPerBw" name="costPerBw" type="double"/>
+    <property column="UpperUtilizationThreshold" name="upperUtilizationThreshold" type="double"/>
+    <property column="LowerUtilizationThreshold" name="lowerUtilizationThreshold" type="double"/>
+    <property column="SchedulingInterval" name="schedulingInterval" type="double"/>
+    <property column="MonitoringInterval" name="monitoringInterval" type="double"/>
+    <list cascade="all-delete-orphan" lazy="false" name="hostList">
+      <key column="DatacenterId"/>
+      <index column="Indx"/>
+      <one-to-many class="cloudreports.models.HostRegistry"/>
+    </list>
+    <list cascade="all-delete-orphan" lazy="false" name="sanList">
+      <key column="DatacenterId"/>
+      <index column="Indx"/>
+      <one-to-many class="cloudreports.models.SanStorageRegistry"/>
+    </list>
+  </class>
+</hibernate-mapping>

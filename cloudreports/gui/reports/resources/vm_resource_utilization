@@ -1,0 +1,82 @@
+
+<div id="resource_utilization_<!--INSERT_CUSTOMER_NAME-->_<!--INSERT_VM_NAME-->" style="display: none;">				
+			<center>
+				<div id="checkboxes_graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_<!--INSERT_VM_NAME-->"></div>
+				
+				<table border="0" id="table_graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_<!--INSERT_VM_NAME-->">
+				<tr>
+				<td><center><p class="ylabel">Resources</p></center></td>
+				<td><div id="graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_<!--INSERT_VM_NAME-->" style="width:600px;height:300px"></div></td>
+				</tr>
+				<tr>
+				<td></td>
+				<td><center>Time (minutes)</center></td>
+				</tr>
+				</table> 
+
+				<input type="checkbox" id="white_background_graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_<!--INSERT_VM_NAME-->" onClick="toggleBackground('table_graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_<!--INSERT_VM_NAME-->');"><label for="white_background_graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_<!--INSERT_VM_NAME-->">White background</label>
+				<p>This graph shows the resource utilization of <!--INSERT_VM_NAME-->.</p>
+			</center>
+ 
+<script type="text/javascript"> 
+$(function () {
+    var datasets = {
+        "CPU": {
+            label: "CPU (MIPS)",
+            data: <!--INSERT_CPU_DATA-->
+        },        
+        "RAM": {
+            label: "RAM (MB)",
+            data: <!--INSERT_RAM_DATA-->
+        },
+        "Bandwidth": {
+            label: "Bandwidth (Mbps)",
+            data: <!--INSERT_BANDWIDTH_DATA-->
+        }
+    };
+
+    var i = 0;
+    $.each(datasets, function(key, val) {
+        val.color = i;
+        ++i;
+    });
+    
+    var choiceContainer = $("#checkboxes_graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_<!--INSERT_VM_NAME-->");
+    $.each(datasets, function(key, val) {
+        choiceContainer.append('<input type="checkbox" name="' + key +
+                               '" checked="checked" id="id' + key + '">' +
+                               '<label for="id' + key + '">'
+                                + val.label + '</label>');
+    });
+    choiceContainer.find("input").click(plotAccordingToChoices);
+
+    function plotAccordingToChoices() {
+        var data = [];
+	var placeholder = $("#graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_<!--INSERT_VM_NAME-->");
+	var options = {
+	 series: {
+	     lines: { show: true }
+	 },
+         zoom: {
+             interactive: true
+         },
+         pan: {
+             interactive: true
+         }
+        };
+ 
+        choiceContainer.find("input:checked").each(function () {
+            var key = $(this).attr("name");
+            if (key && datasets[key])
+                data.push(datasets[key]);
+        });
+ 
+        if (data.length > 0)
+            $.plot(placeholder, data, options);
+    }
+ 
+    plotAccordingToChoices();
+});
+</script> 
+
+</div>	<!-- end of resource_utilization_<!--INSERT_CUSTOMER_NAME-->_<!--INSERT_VM_NAME--> -->

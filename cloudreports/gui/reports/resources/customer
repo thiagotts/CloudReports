@@ -1,0 +1,243 @@
+	
+<div id="customer_<!--INSERT_CUSTOMER_NAME-->" style="display: none;">
+
+	<div id="content">
+        
+		<h1><a style="cursor: pointer;" onclick="toggleDiv('resource_utilization_<!--INSERT_CUSTOMER_NAME-->','slow');">Resource utilization <img src="../images/up.png" alt="arrow" class="resource_utilization_<!--INSERT_CUSTOMER_NAME-->"/></a></h1>  
+
+		<div id="resource_utilization_<!--INSERT_CUSTOMER_NAME-->">			
+			<p>Select the source:
+					<select id="select_esource_utilization_<!--INSERT_CUSTOMER_NAME-->" onFocus="previousOption=$(this).attr('value');" onchange="newOption=$(this).attr('value');changeOption(newOption, previousOption); previousOption=newOption;">
+					  <option value="resource_utilization_<!--INSERT_CUSTOMER_NAME-->_overall">Overall</option>
+					  <!--INSERT_VM_RESOURCE_UTILIZATION_OPTIONS-->
+					</select>	
+			</p>		
+
+			<div id="resource_utilization_<!--INSERT_CUSTOMER_NAME-->_overall">				
+			<center>
+				<div id="checkboxes_graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_overall"></div>
+
+				<table border="0" id="table_graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_overall">
+				<tr>
+				<td><center><p class="ylabel">Resources</p></center></td>
+				<td><div id="graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_overall" style="width:600px;height:300px"></div></td>
+				</tr>
+				<tr>
+				<td></td>
+				<td><center>Time (minutes)</center></td>
+				</tr>
+				</table> 
+
+				<input type="checkbox" id="white_background_graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_overall" onClick="toggleBackground('table_graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_overall');"><label for="white_background_graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_overall">White background</label>
+				<p>This graph shows the overall resource utilization of this customer.</p>
+			</center>
+ 
+<script type="text/javascript"> 
+$(function () {
+    var datasets = {
+        "CPU": {
+            label: "CPU (MIPS)",
+            data: <!--INSERT_OVERALL_CPU_DATA-->
+        },        
+        "RAM": {
+            label: "RAM (MB)",
+            data: <!--INSERT_OVERALL_RAM_DATA-->
+        },
+        "Bandwidth": {
+            label: "Bandwidth (Mbps)",
+            data: <!--INSERT_OVERALL_BANDWIDTH_DATA-->
+        }
+    };
+
+    var i = 0;
+    $.each(datasets, function(key, val) {
+        val.color = i;
+        ++i;
+    });
+    
+    var choiceContainer = $("#checkboxes_graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_overall");
+    $.each(datasets, function(key, val) {
+        choiceContainer.append('<input type="checkbox" name="' + key +
+                               '" checked="checked" id="id' + key + '">' +
+                               '<label for="id' + key + '">'
+                                + val.label + '</label>');
+    });
+    choiceContainer.find("input").click(plotAccordingToChoices);
+
+    function plotAccordingToChoices() {
+        var data = [];
+	var placeholder = $("#graph_resource_utilization_<!--INSERT_CUSTOMER_NAME-->_overall");
+	var options = {
+	 series: {
+	     lines: { show: true }
+	 },
+         zoom: {
+             interactive: true
+         },
+         pan: {
+             interactive: true
+         }
+        };
+ 
+        choiceContainer.find("input:checked").each(function () {
+            var key = $(this).attr("name");
+            if (key && datasets[key])
+                data.push(datasets[key]);
+        });
+ 
+        if (data.length > 0)
+            $.plot(placeholder, data, options);
+    }
+ 
+    plotAccordingToChoices();	
+
+});
+</script> 
+			</div>	<!-- end of resource_utilization_<!--INSERT_CUSTOMER_NAME-->_overall -->
+
+			<!--INSERT_VM_RESOURCE_UTILIZATION_LIST-->
+	
+		</div> <!-- end of resource_utilization_<!--INSERT_CUSTOMER_NAME--> -->
+	</div> <!-- end of content -->
+
+        
+	<div id="content">
+        
+		<h1><a style="cursor: pointer;" onclick="toggleDiv('cloudlets_<!--INSERT_CUSTOMER_NAME-->','slow');">Cloudlets <img src="../images/up.png" alt="arrow" class="cloudlets_<!--INSERT_CUSTOMER_NAME-->"/></a></h1>  
+
+		<div id="cloudlets_<!--INSERT_CUSTOMER_NAME-->">
+			<center>
+
+				<table border="0" id="table_graph_cloudlets_<!--INSERT_CUSTOMER_NAME-->">
+				<tr>
+				<td><center><p class="ylabel">Cloudlets</p></center></td>
+				<td><div id="graph_cloudlets_<!--INSERT_CUSTOMER_NAME-->" style="width:600px;height:300px"></div></td>
+				</tr>
+				<tr>
+				<td></td>
+				<td></td>
+				</tr>
+				</table> 
+
+				<input type="checkbox" id="white_background_graph_cloudlets_<!--INSERT_CUSTOMER_NAME-->" onClick="toggleBackground('table_graph_cloudlets_<!--INSERT_CUSTOMER_NAME-->');"><label for="white_background_graph_cloudlets_<!--INSERT_CUSTOMER_NAME-->">White background</label>
+				<p>This graph shows how many cloudlets have been sucessfully executed by this customer on each datacenter.</p>
+			</center>
+ 
+<script type="text/javascript"> 
+$(function () {
+    var placeholder = $("#graph_cloudlets_<!--INSERT_CUSTOMER_NAME-->");
+    var options = {
+	series: {
+            bars: { show: true }
+	},
+        zoom: {
+            interactive: true
+        },
+        pan: {
+            interactive: true
+        },
+	xaxis: {
+    	    show: false
+	}
+    };
+
+    $.plot(placeholder, <!--INSERT_CLOUDLETS_DATA-->, options);
+
+});
+</script> 
+		</div> <!-- end of cloudlets_<!--INSERT_CUSTOMER_NAME--> -->
+	</div> <!-- end of content -->
+
+	<div id="content">
+        
+		<h1><a style="cursor: pointer;" onclick="toggleDiv('execution_time_<!--INSERT_CUSTOMER_NAME-->','slow');">Execution time <img src="../images/up.png" alt="arrow" class="execution_time_<!--INSERT_CUSTOMER_NAME-->"/></a></h1>  
+
+		<div id="execution_time_<!--INSERT_CUSTOMER_NAME-->">
+			<center>
+				<div id="checkboxes_graph_execution_time_<!--INSERT_CUSTOMER_NAME-->"></div>
+
+				<table border="0" id="table_graph_execution_time_<!--INSERT_CUSTOMER_NAME-->">
+				<tr>
+				<td><center><p class="ylabel">Time (s)</p></center></td>
+				<td><div id="graph_execution_time_<!--INSERT_CUSTOMER_NAME-->" style="width:600px;height:300px"></div></td>
+				</tr>
+				<tr>
+				<td></td>
+				<td><center>Cloudlet ID</center></td>
+				</tr>
+				</table> 
+
+				<input type="checkbox" id="white_background_graph_execution_time_<!--INSERT_CUSTOMER_NAME-->" onClick="toggleBackground('table_graph_execution_time_<!--INSERT_CUSTOMER_NAME-->');"><label for="white_background_graph_execution_time_<!--INSERT_CUSTOMER_NAME-->">White background</label>
+				<p>This graph shows the amount of time each of this customer's cloudlets took to be executed.</p>
+			</center>
+ 
+<script type="text/javascript"> 
+$(function () {
+    var datasets = {
+        "Start time": {
+            label: "Start time",
+            data: <!--INSERT_START_DATA-->
+        },        
+        "Finish time": {
+            label: "Finish time",
+            data: <!--INSERT_FINISH_DATA-->
+        },
+        "Average start": {
+            label: "Average start",
+            data: <!--INSERT_AVERAGE_START_DATA-->
+        },
+        "Average finish": {
+            label: "Average finish",
+            data: <!--INSERT_AVERAGE_FINISH_DATA-->
+        }
+    };
+
+    var i = 0;
+    $.each(datasets, function(key, val) {
+        val.color = i;
+        ++i;
+    });
+    
+    var choiceContainer = $("#checkboxes_graph_execution_time_<!--INSERT_CUSTOMER_NAME-->");
+    $.each(datasets, function(key, val) {
+        choiceContainer.append('<input type="checkbox" name="' + key +
+                               '" checked="checked" id="id' + key + '">' +
+                               '<label for="id' + key + '">'
+                                + val.label + '</label>');
+    });
+    choiceContainer.find("input").click(plotAccordingToChoices);
+
+
+    function plotAccordingToChoices() {
+        var data = [];
+	var placeholder = $("#graph_execution_time_<!--INSERT_CUSTOMER_NAME-->");
+	var options = {
+	 series: {
+	     lines: { show: true }
+	 },
+         zoom: {
+             interactive: true
+         },
+         pan: {
+             interactive: true
+         }
+        };
+ 
+        choiceContainer.find("input:checked").each(function () {
+            var key = $(this).attr("name");
+            if (key && datasets[key])
+                data.push(datasets[key]);
+        });
+ 
+        if (data.length > 0)
+            $.plot(placeholder, data, options);
+    }
+ 
+    plotAccordingToChoices();	
+
+});
+</script> 
+		</div> <!-- end of execution_time_<!--INSERT_CUSTOMER_NAME--> -->
+	</div> <!-- end of content -->
+
+</div> <!-- end of customer_<!--INSERT_CUSTOMER_NAME--> -->

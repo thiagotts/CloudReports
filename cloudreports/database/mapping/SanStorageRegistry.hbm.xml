@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cloudreports.models.SanStorageRegistry" table="SanStorage">
+    <id column="Id" name="id" type="long">
+      <generator class="native"/>
+    </id>
+    <property column="Name" name="name" type="string"/>
+    <property column="Capacity" name="capacity" type="double"/>
+    <property column="Bandwidth" name="bandwidth" type="double"/>
+    <property column="NetworkLatency" name="networkLatency" type="double"/>
+  </class>
+</hibernate-mapping>

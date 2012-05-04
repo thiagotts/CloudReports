@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Simulation Report - Customers</title>
+<meta name="description" content="CloudReports is a free simulation tool for cloud computing environments." />
+
+<link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+<script src="../js/jquery-1.6.2.js" type="text/javascript"></script>
+<script src="../js/jquery.flot.js" type="text/javascript"></script>
+<script src="../js/jquery.flot.navigate.js" type="text/javascript"></script>
+<script src="../js/cloudreports.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	var previousOption;
+	var newOption;
+</script>
+
+</head>
+<body>
+
+<div id="slider">
+	
+    <div id="templatemo_sidebar">
+    	<div id="templatemo_header">
+		<img src="../images/cloudreports_logo.png" alt="CloudReports" />
+        </div> <!-- end of header -->
+        
+        <ul class="navigation">
+            <li><a href="../index.html">Overview<span class="ui_icon overview"></span></a></li>
+            <li><a href="../provider/datacenters.html">Provider<span class="ui_icon provider"></span></a></li>
+            <li><a href="#" class="selected">Customers<span class="ui_icon customers"></span></a></li>
+            <li><a href="../log/log.html">Log<span class="ui_icon log"></span></a></li>
+        </ul>
+    </div> <!-- end of sidebar -->
+
+	<div id="container">
+	
+		<div id="top_menu">	
+		    	<ul>
+				<li class="customer"><a href="#" class="selected">Select a customer:</a>
+								    
+					<select id="select_customer" onFocus="previousOption=$(this).attr('value');" onchange="newOption=$(this).attr('value');changeOption(newOption, previousOption); previousOption=newOption;">
+						<!--INSERT_CUSTOMER_OPTIONS-->
+					</select>
+
+				</li>
+        		</ul>
+		</div>
+        
+
+	<!--INSERT_CUSTOMERS_LIST-->
+
+        
+	<div id="footer">
+
+           CloudReports is licensed under GNU GPL 3.0 | Template adapted from <a href="http://www.templatemo.com" target="_blank">Free CSS Templates</a> | IE is not supported
+        
+        </div><!-- end of footer -->
+
+    </div> <!-- end of container -->
+
+</div> <!-- end of slider -->
+
+</body>
+</html>
