@@ -47,14 +47,14 @@ Alternatively, the commands below will get the job done without the need of any 
 aforementioned. They assume you are using a UNIX-based system, but you can use them on other
 systems with some minor changes.
 
-- Download the code, extract it and open a terminal in its directory.
+1. Download the code, extract it and open a terminal in its directory.
 
-- Compile all .java files:
+2. Compile all .java files:
 
     mkdir bin
     find . -name "*.java" | xargs javac -d bin -cp "lib/*"
 
-- Copy needed files to the bin directory:
+3. Copy needed files to the bin directory:
 
     cp hibernate.cfg.xml LICENSE.txt MANIFEST.mf bin
     cp -R lib bin
@@ -63,26 +63,27 @@ systems with some minor changes.
     cp -R cloudreports/gui/resources/ bin/cloudreports/gui/
     find bin -name "*.java" -delete
 
-- Create the .jar file:
+4. Create the .jar file:
 
     cd bin
     jar cmf0 MANIFEST.mf CloudReports.jar hibernate.cfg.xml README.md LICENSE.txt cloudreports/
 
-- Remove temporary files at bin directory (optional):
+5. Remove temporary files at bin directory (optional):
 
     rm -R cloudreports/ hibernate.cfg.xml  MANIFEST.mf
 
-- Run the .jar file:
+6. Run the .jar file:
 
     java -jar CloudReports.jar & exit
-    
+
+
 ### Running from binaries
 
 Running CloudReports from binaries is very straightforward:
 
-- Download the binaries from the [downloads][downloadspage] page and extract it anywhere you want.
+1. Download the binaries from the [downloads][downloadspage] page and extract it anywhere you want.
 
-- Run the .jar file:
+2. Run the .jar file:
 
     java -jar CloudReports.jar & exit
 
@@ -136,7 +137,9 @@ For more information, refer to the LICENSE file or see [the GNU page][gnu].
 
 [cloudsim]: http://www.cloudbus.org/cloudsim/
 [downloadspage]: https://github.com/thiagotts/CloudReports/downloads
-[jre]: http://www.oracle.com/technetwork/java/javase/downloads/index.html
+[netbeans]:http://netbeans.org/
+[eclipse]: http://www.eclipse.org/
+[jdk]: http://www.oracle.com/technetwork/java/javase/downloads/index.html
 [ant]:http://ant.apache.org/
 [maven]: http://maven.apache.org/
 [gnu]: http://www.gnu.org/licenses
