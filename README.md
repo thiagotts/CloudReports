@@ -56,7 +56,7 @@ Compile all .java files:
 
 Copy needed files to the bin directory:
 
-    cp hibernate.cfg.xml LICENSE.txt MANIFEST.mf bin
+    cp hibernate.cfg.xml bin
     cp -R lib bin
     cp -R cloudreports/database/mapping/ bin/cloudreports/database/
     cp -R cloudreports/gui/reports/resources/ bin/cloudreports/gui/reports/
@@ -66,11 +66,11 @@ Copy needed files to the bin directory:
 Create the .jar file:
 
     cd bin
-    jar cmf0 MANIFEST.mf CloudReports.jar hibernate.cfg.xml README.md LICENSE.txt cloudreports/
+    jar cmf0 MANIFEST.mf CloudReports.jar hibernate.cfg.xml cloudreports/
 
 Remove temporary files at bin directory (optional):
 
-    rm -R cloudreports/ hibernate.cfg.xml  MANIFEST.mf
+    rm -R cloudreports/ hibernate.cfg.xml MANIFEST.mf
 
 Run the .jar file:
 
