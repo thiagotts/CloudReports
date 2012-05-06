@@ -47,14 +47,14 @@ Alternatively, the commands below will get the job done without the need of any 
 aforementioned. They assume you are using a UNIX-based system, but you can use them on other
 systems with some minor changes.
 
-1. Download the code, extract it and open a terminal in its directory.
+Download the code, extract it and open a terminal in its directory.
 
-2. Compile all .java files:
+Compile all .java files:
 
     mkdir bin
     find . -name "*.java" | xargs javac -d bin -cp "lib/*"
 
-3. Copy needed files to the bin directory:
+Copy needed files to the bin directory:
 
     cp hibernate.cfg.xml LICENSE.txt MANIFEST.mf bin
     cp -R lib bin
@@ -63,16 +63,16 @@ systems with some minor changes.
     cp -R cloudreports/gui/resources/ bin/cloudreports/gui/
     find bin -name "*.java" -delete
 
-4. Create the .jar file:
+Create the .jar file:
 
     cd bin
     jar cmf0 MANIFEST.mf CloudReports.jar hibernate.cfg.xml README.md LICENSE.txt cloudreports/
 
-5. Remove temporary files at bin directory (optional):
+Remove temporary files at bin directory (optional):
 
     rm -R cloudreports/ hibernate.cfg.xml  MANIFEST.mf
 
-6. Run the .jar file:
+Run the .jar file:
 
     java -jar CloudReports.jar & exit
 
@@ -81,9 +81,9 @@ systems with some minor changes.
 
 Running CloudReports from binaries is very straightforward:
 
-1. Download the binaries from the [downloads][downloadspage] page and extract it anywhere you want.
+Download the binaries from the [downloads][downloadspage] page and extract it anywhere you want.
 
-2. Run the .jar file:
+Run the .jar file:
 
     java -jar CloudReports.jar & exit
 
