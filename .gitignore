@@ -1,3 +1,11 @@
-/CloudReports/nbproject/private/
-/cloudreports (Case Conflict 4)/nbproject/private/
-/CloudReportsTrunk/nbproject/private/
+#project execution artifacts
+target
+db
+reports
+tempLog
+
+#eclipse file
+.classpath
+.settings
+.project
+/CloudReportsTrunk/build/
