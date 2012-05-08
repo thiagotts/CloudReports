@@ -47,7 +47,7 @@ mvn clean package jar:jar
 
 ### Run the jar file
 ```
-   java -jar CloudReports.jar & exit
+   java -jar target/CloudReports.jar & exit
 ```
 
 or
