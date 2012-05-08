@@ -33,48 +33,34 @@ You can either compile CloudReports from source or run the .jar file directly (s
 ### Compiling CloudReports
 
 First of all, make sure you have your development environment set up. If you don't,
-download and install the [Java Development Kit][jdk]. Notice that this project was built
-using JDK 6 and no tests whatsoever were performed using JDK 7.
+download and install the [Java Development Kit][jdk] and [Maven][maven]. Notice that this project was built using JDK 6 and no tests whatsoever were performed using JDK 7.
 
-Some build tools such as [Ant][ant] or [Maven][maven] make compiling a Java project much easier.
-Furthermore, most of the popular IDE (e.g. [NetBeans][netbeans] and [Eclipse][eclipse]) offer full 
-integration with these tools, which automates the whole process and saves you a lot of time. All
-you need to do is create a new project in one of these IDE with CloudReport's source code, add the
-dependencies (provided in the lib folder) and build it. This is the easy, straightforward and
-recommended way.
+```
+mvn clean package
+```
 
-Alternatively, the commands below will get the job done without the need of any of the tools
-aforementioned. They assume you are using a UNIX-based system, but you can use them on other
-systems with some minor changes.
+### Create the executable jar file with all dependencies
 
-Download the code, extract it and open a terminal in its directory.
+```
+mvn clean package jar:jar
+```
 
-Compile all .java files:
+### Run the jar file
+```
+   java -jar CloudReports.jar & exit
+```
 
-    mkdir bin
-    find . -name "*.java" | xargs javac -d bin -cp "lib/*"
+or
 
-Copy needed files to the bin directory:
+```
+   ./bin/start.sh
+```
 
-    cp hibernate.cfg.xml bin
-    cp -R lib bin
-    cp -R cloudreports/database/mapping/ bin/cloudreports/database/
-    cp -R cloudreports/gui/reports/resources/ bin/cloudreports/gui/reports/
-    cp -R cloudreports/gui/resources/ bin/cloudreports/gui/
-    find bin -name "*.java" -delete
+### Import the project in Eclipse
 
-Create the .jar file:
-
-    cd bin
-    jar cmf0 MANIFEST.mf CloudReports.jar hibernate.cfg.xml cloudreports/
-
-Remove temporary files at bin directory (optional):
-
-    rm -R cloudreports/ hibernate.cfg.xml MANIFEST.mf
-
-Run the .jar file:
-
-    java -jar CloudReports.jar & exit
+```
+  mvn eclipse:eclipse
+```
 
 
 ### Running from binaries
@@ -136,7 +122,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 For more information, refer to the LICENSE file or see [the GNU page][gnu].
 
 [cloudsim]: http://www.cloudbus.org/cloudsim/
-[downloadspage]: https://github.com/thiagotts/CloudReports/downloads
+[downloadspage]: https://github.com/alessandroleite/CloudReports/downloads
 [netbeans]:http://netbeans.org/
 [eclipse]: http://www.eclipse.org/
 [jdk]: http://www.oracle.com/technetwork/java/javase/downloads/index.html
