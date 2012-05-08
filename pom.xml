@@ -23,6 +23,10 @@
 			</snapshots>
 		</repository>
 		<repository>
+			<id>anydoby.com</id>
+			<url>http://anydoby.com/maven</url>
+		</repository>
+		<repository>
 			<id>project-local-repo</id>
 			<url>file://${basedir}/maven-repo</url>
 		</repository>
@@ -66,14 +70,12 @@
 			<artifactId>cloudsim</artifactId>
 			<version>3.0</version>
 			<scope>compile</scope>
-			<!--<systemPath>${basedir}/lib/CloudSim-3.0.jar</systemPath> -->
 		</dependency>
 		<dependency>
 			<groupId>qrbg</groupId>
 			<artifactId>qrbg</artifactId>
 			<version>1.0</version>
 			<scope>compile</scope>
-			<!--<systemPath>${basedir}/lib/QRBG.jar</systemPath> -->
 		</dependency>
 		<dependency>
 			<groupId>org.xerial</groupId>
@@ -81,8 +83,14 @@
 			<version>3.6.16</version>
 		</dependency>
 	</dependencies>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>anydoby.com</id>
+			<url>http://anydoby.com/maven</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<build>
-	    <finalName>CloudReports</finalName>
+		<finalName>CloudReports</finalName>
 		<defaultGoal>package</defaultGoal>
 		<resources>
 			<resource>
