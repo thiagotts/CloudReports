@@ -30,20 +30,23 @@ Here's a screenshot of CloudReports's GUI:
 You can either compile CloudReports from source or run the .jar file directly (see the
 [downloads][downloadspage] page).
 
-### Compiling CloudReports
+### Building with Maven
+
+Some build tools such as [Ant][ant] or [Maven][maven] make compiling a Java project much easier.
+Furthermore, most of the popular IDE (e.g. [NetBeans][netbeans] and [Eclipse][eclipse]) offer 
+integration with these tools, which automates the whole process and saves you a lot of time.
+The steps below show you how to build CloudReports with Maven and import a project to Eclipse.
 
 First of all, make sure you have your development environment set up. If you don't,
-download and install the [Java Development Kit][jdk] and [Maven][maven]. Notice that this project was built using JDK 6 and no tests whatsoever were performed using JDK 7.
+download and install the [Java Development Kit][jdk] and [Maven][maven]. 
+Notice that this project was built using JDK 6 and no tests whatsoever were performed using JDK 7.
+
+Open a terminal in the project's folder and create the executable .jar file with all dependencies:
 
     mvn clean package
-
-### Create the executable jar file with all dependencies
-
-
     mvn clean package jar:jar
 
-
-### Run the jar file
+Run the jar file:
 
     java -jar target/CloudReports.jar & exit
 
@@ -51,22 +54,17 @@ or
 
     ./bin/start.sh
 
-### Import the project in Eclipse
+If you want to import the project in Eclipse, just run:
 
-
-mvn eclipse:eclipse
-
+    mvn eclipse:eclipse
 
 ### Running from binaries
 
-Running CloudReports from binaries is very straightforward:
+Running CloudReports from binaries is very simple:
 
-Download the binaries from the [downloads][downloadspage] page and extract it anywhere you want.
-
-Run the .jar file:
+Download the binaries from the [downloads][downloadspage] page, extract it, and run the .jar file:
 
     java -jar CloudReports.jar & exit
-
 
 ## Extensions development
 
@@ -116,7 +114,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 For more information, refer to the LICENSE file or see [the GNU page][gnu].
 
 [cloudsim]: http://www.cloudbus.org/cloudsim/
-[downloadspage]: https://github.com/alessandroleite/CloudReports/downloads
+[downloadspage]: https://github.com/thiagotts/CloudReports/downloads
 [netbeans]:http://netbeans.org/
 [eclipse]: http://www.eclipse.org/
 [jdk]: http://www.oracle.com/technetwork/java/javase/downloads/index.html
