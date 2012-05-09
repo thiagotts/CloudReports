@@ -35,32 +35,26 @@ You can either compile CloudReports from source or run the .jar file directly (s
 First of all, make sure you have your development environment set up. If you don't,
 download and install the [Java Development Kit][jdk] and [Maven][maven]. Notice that this project was built using JDK 6 and no tests whatsoever were performed using JDK 7.
 
-```
-mvn clean package
-```
+    mvn clean package
 
 ### Create the executable jar file with all dependencies
 
-```
-mvn clean package jar:jar
-```
+
+    mvn clean package jar:jar
+
 
 ### Run the jar file
-```
-   java -jar target/CloudReports.jar & exit
-```
+
+    java -jar target/CloudReports.jar & exit
 
 or
 
-```
-   ./bin/start.sh
-```
+    ./bin/start.sh
 
 ### Import the project in Eclipse
 
-```
-  mvn eclipse:eclipse
-```
+
+mvn eclipse:eclipse
 
 
 ### Running from binaries

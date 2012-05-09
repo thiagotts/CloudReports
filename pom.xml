@@ -15,6 +15,7 @@
 			<id>maven-repository.dev.java.net</id>
 			<url>http://download.java.net/maven/1</url>
 		</repository>
+<<<<<<< HEAD
   		<repository>
         		<id>maven2-repository.dev.java.net</id>
         		<name>Java.net Repository for Maven</name>
@@ -27,6 +28,8 @@
 		            <enabled>true</enabled>
 		        </releases>
 		</repository>
+=======
+>>>>>>> 43da81e35d1b6752929de72d9394dec00ada62c4
 		<repository>
 			<id>EclipseLink Repo</id>
 			<url>http://www.eclipse.org/downloads/download.php?r=1&amp;nf=1&amp;file=/rt/eclipselink/maven.repo</url>
@@ -205,4 +208,8 @@
 		<buildNumber>${maven.build.timestamp}</buildNumber>
 		<hibernate.annotation.version>3.0.0.GA</hibernate.annotation.version>
 	</properties>
+<<<<<<< HEAD
 </project>
+=======
+</project>
+>>>>>>> 43da81e35d1b6752929de72d9394dec00ada62c4
