@@ -80,7 +80,7 @@ CloudReports' source code. Currently, the following types of algorithms can be d
 - Resource utilization models.
 - Virtual machines schedulers.
 
-Soon, a wiki page containing some basic guidelines on developing extensions will be provided.
+For more information, visit the [wiki page about developing extensions][extensionswiki].
 
 ## Upcoming features
 
@@ -121,4 +121,5 @@ For more information, refer to the LICENSE file or see [the GNU page][gnu].
 [ant]:http://ant.apache.org/
 [maven]: http://maven.apache.org/
 [gnu]: http://www.gnu.org/licenses
+[extensionswiki]: https://github.com/thiagotts/CloudReports/wiki/Developing-extensions
 
