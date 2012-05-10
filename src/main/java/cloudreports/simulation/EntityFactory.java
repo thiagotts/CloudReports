@@ -309,19 +309,19 @@ public class EntityFactory {
         List<Cloudlet> list = new ArrayList<Cloudlet>();
 
         for (int i = 0; i < numOfVms; i++) {
-            UtilizationModel cpu = cloudreports.enums.UtilizationModel.getInstance(ugr.getUtilizationModelCpuAlias()).getModel();
+            UtilizationModel cpu = cloudreports.enums.UtilizationModel.getInstance(ugr.getUtilizationModelCpuAlias()).getModel(ugr.getUtilizationModelCpuAlias());
             if (cpu == null) {
                 Dialog.showErrorMessage(null, "Error loading \"" + ugr.getUtilizationModelCpuAlias() + "\" CPU utilization model.");
                 return null;
             }
 
-            UtilizationModel ram = cloudreports.enums.UtilizationModel.getInstance(ugr.getUtilizationModelRamAlias()).getModel();
+            UtilizationModel ram = cloudreports.enums.UtilizationModel.getInstance(ugr.getUtilizationModelRamAlias()).getModel(ugr.getUtilizationModelRamAlias());
             if (ram == null) {
                 Dialog.showErrorMessage(null, "Error loading \"" + ugr.getUtilizationModelRamAlias() + "\" RAM utilization model.");
                 return null;
             }
 
-            UtilizationModel bw = cloudreports.enums.UtilizationModel.getInstance(ugr.getUtilizationModelBwAlias()).getModel();
+            UtilizationModel bw = cloudreports.enums.UtilizationModel.getInstance(ugr.getUtilizationModelBwAlias()).getModel(ugr.getUtilizationModelBwAlias());
             if (bw == null) {
                 Dialog.showErrorMessage(null, "Error loading \"" + ugr.getUtilizationModelBwAlias() + "\" bandwidth utilization model.");
                 return null;

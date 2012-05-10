@@ -89,6 +89,8 @@ public class Simulation implements Runnable {
         String[] dbNames = MainView.getEnvironmentsNames();
         double startTime = Calendar.getInstance().getTimeInMillis();
 
+        CloudSim.init(getNumberOfCustomers(), Calendar.getInstance(), false);
+        CloudSim.startSimulation();
         for (String dbName : dbNames) {
             HibernateUtil.setActiveDatabase(dbName + ".cre");
             runSimulations();

@@ -100,19 +100,24 @@ public class ExtensionsLoader {
      * Gets the aliases of all extension implementations of a given base class.
      * It reads the classnames.xml file to get the list of aliases.
      *
-     * @param   baseClassname   the classname of the base class.
+     * @param   type   			the type of the extension.
      * @return                  a list of aliases of all extension implementations
      *                          of the given base class.
      * @since   1.0
      */     
-    public static List<String> getExtensionsAliasesByBaseClassname(String baseClassname) {
+    public static List<String> getExtensionsAliasesByType(String type) {
         List<String> listAliases = new ArrayList<String>();
         if(classnamesXml == null) return listAliases;
         
         NodeList classNodes = classnamesXml.getElementsByTagName("class");            
         for(int index = 0; index < classNodes.getLength(); index++) {
-            if(classNodes.item(index).getAttributes().getNamedItem("base").getNodeValue().equals(baseClassname))
-                listAliases.add(classNodes.item(index).getAttributes().getNamedItem("alias").getNodeValue());
+        	try {
+        		if(classNodes.item(index).getAttributes().getNamedItem("type").getNodeValue().equals(type))
+        			listAliases.add(classNodes.item(index).getAttributes().getNamedItem("alias").getNodeValue());
+        	}
+        	catch (NullPointerException e) {
+        		continue;
+			}
         }
         
         return listAliases;
@@ -122,7 +127,7 @@ public class ExtensionsLoader {
      * Gets a specific user-implemented extension object based on its base class
      * and its alias.
      *
-     * @param   baseClassname           the classname of the base class.
+     * @param   type		            the type of the extension.
      * @param   alias                   the alias of the extension.
      * @param   constructorTypes        the types used by the constructor of the
      *                                  extension class.
@@ -131,9 +136,9 @@ public class ExtensionsLoader {
      * @return                          an instance of the extension class.
      * @since                           1.0
      */      
-    public static Object getExtension(String baseClassname, String alias, Class<?>[] constructorTypes, Object[] constructorArguments) {
-        String filename = getFileName(baseClassname, alias);
-        String classname = getClassnameOfExtension(baseClassname, alias);
+    public static Object getExtension(String type, String alias, Class<?>[] constructorTypes, Object[] constructorArguments) {
+        String filename = getFileName(type, alias);
+        String classname = getClassnameOfExtension(type, alias);
         if(filename == null || classname == null) return null;        
         
         File extensionFile = new File(extensionsPath + "/" + filename);
@@ -158,18 +163,18 @@ public class ExtensionsLoader {
      * the base classname and the extension alias.
      * It reads the classnames.xml file to get name of the file.
      *
-     * @param   baseClassname           the classname of the base class.
+     * @param   type		            the type of the extension.
      * @param   alias                   the alias of the extension.
      * @return                          the name of the file that contains the
      *                                  extension class.
      * @since                           1.0
      */      
-    private static String getFileName(String baseClassname, String alias) {
+    private static String getFileName(String type, String alias) {
         if(classnamesXml == null) return null;
         
         NodeList classNodes = classnamesXml.getElementsByTagName("class");            
         for(int index = 0; index < classNodes.getLength(); index++) {
-            if(classNodes.item(index).getAttributes().getNamedItem("base").getNodeValue().equals(baseClassname) &&
+            if(classNodes.item(index).getAttributes().getNamedItem("type").getNodeValue().equals(type) &&
                classNodes.item(index).getAttributes().getNamedItem("alias").getNodeValue().equals(alias))
                 return classNodes.item(index).getAttributes().getNamedItem("filename").getNodeValue();
         }
@@ -182,17 +187,17 @@ public class ExtensionsLoader {
      * and its alias.
      * It reads the classnames.xml file to get classname.
      *
-     * @param   baseClassname           the classname of the base class.
+     * @param   type		            the type of the extension.
      * @param   alias                   the alias of the extension.
      * @return                          the classname of the extension class.
      * @since                           1.0
      */     
-    private static String getClassnameOfExtension(String baseClassname, String alias) {
+    private static String getClassnameOfExtension(String type, String alias) {
         if(classnamesXml == null) return null;
         
         NodeList classNodes = classnamesXml.getElementsByTagName("class");            
         for(int index = 0; index < classNodes.getLength(); index++) {
-            if(classNodes.item(index).getAttributes().getNamedItem("base").getNodeValue().equals(baseClassname) &&
+            if(classNodes.item(index).getAttributes().getNamedItem("type").getNodeValue().equals(type) &&
                classNodes.item(index).getAttributes().getNamedItem("alias").getNodeValue().equals(alias))
                 return classNodes.item(index).getAttributes().getNamedItem("name").getNodeValue();
         }

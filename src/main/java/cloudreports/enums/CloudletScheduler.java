@@ -80,7 +80,7 @@ public enum CloudletScheduler implements Serializable{
             try {
                 Class<?>[] types = new Class<?>[]{double.class, int.class};
                 Object[] arguments = new Object[]{mips, pes};
-                return (org.cloudbus.cloudsim.CloudletScheduler) ExtensionsLoader.getExtension("org.cloudbus.cloudsim.CloudletScheduler", schedulerAlias, types, arguments);
+                return (org.cloudbus.cloudsim.CloudletScheduler) ExtensionsLoader.getExtension("CloudletScheduler", schedulerAlias, types, arguments);
             } catch (Exception e) {
                 return null;
             }
@@ -122,7 +122,7 @@ public enum CloudletScheduler implements Serializable{
      */     
     public static String[] getCloudletSchedulersNames() {
         String[] nativeSchedulers = new String[] {"Time shared", "Space shared", "Dynamic workload"};
-        List<String> extensionSchedulers = ExtensionsLoader.getExtensionsAliasesByBaseClassname("org.cloudbus.cloudsim.CloudletScheduler");
+        List<String> extensionSchedulers = ExtensionsLoader.getExtensionsAliasesByType("CloudletScheduler");
         extensionSchedulers.addAll(Arrays.asList(nativeSchedulers));
         
         return extensionSchedulers.toArray(new String[0]);

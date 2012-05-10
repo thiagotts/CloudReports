@@ -54,7 +54,7 @@ public enum RamProvisioner {
             try {
                 Class<?>[] types = new Class<?>[]{int.class};
                 Object[] arguments = new Object[]{availableRam};
-                return (org.cloudbus.cloudsim.provisioners.RamProvisioner) ExtensionsLoader.getExtension("org.cloudbus.cloudsim.provisioners.RamProvisioner", provisionerAlias, types, arguments);
+                return (org.cloudbus.cloudsim.provisioners.RamProvisioner) ExtensionsLoader.getExtension("RamProvisioner", provisionerAlias, types, arguments);
             } catch (Exception e) {
                 return null;
             }
@@ -92,7 +92,7 @@ public enum RamProvisioner {
      */     
     public static String[] getRamProvisionerNames() {
         String[] nativeProvisioners = new String[]{"Simple"};
-        List<String> extensionProvisioners = ExtensionsLoader.getExtensionsAliasesByBaseClassname("org.cloudbus.cloudsim.provisioners.RamProvisioner");
+        List<String> extensionProvisioners = ExtensionsLoader.getExtensionsAliasesByType("RamProvisioner");
         extensionProvisioners.addAll(Arrays.asList(nativeProvisioners));
 
         return extensionProvisioners.toArray(new String[0]);

@@ -53,7 +53,7 @@ public enum PeProvisioner {
             try {
                 Class<?>[] types = new Class<?>[]{double.class};
                 Object[] arguments = new Object[]{mips};
-                return (org.cloudbus.cloudsim.provisioners.PeProvisioner) ExtensionsLoader.getExtension("org.cloudbus.cloudsim.provisioners.PeProvisioner", provisionerAlias, types, arguments);
+                return (org.cloudbus.cloudsim.provisioners.PeProvisioner) ExtensionsLoader.getExtension("PeProvisioner", provisionerAlias, types, arguments);
             } catch (Exception e) {
                 return null;
             }
@@ -91,7 +91,7 @@ public enum PeProvisioner {
      */         
     public static String[] getPeProvisionerNames() {
         String[] nativeProvisioners = new String[]{"Simple"};
-        List<String> extensionProvisioners = ExtensionsLoader.getExtensionsAliasesByBaseClassname("org.cloudbus.cloudsim.provisioners.PeProvisioner");
+        List<String> extensionProvisioners = ExtensionsLoader.getExtensionsAliasesByType("PeProvisioner");
         extensionProvisioners.addAll(Arrays.asList(nativeProvisioners));
 
         return extensionProvisioners.toArray(new String[0]);

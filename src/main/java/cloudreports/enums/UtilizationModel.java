@@ -41,7 +41,7 @@ public enum UtilizationModel implements Serializable{
      */        
     FULL {
         @Override
-        public org.cloudbus.cloudsim.UtilizationModel getModel() {
+        public org.cloudbus.cloudsim.UtilizationModel getModel(String modelAlias) {
             return new UtilizationModelFull();
         }
     },
@@ -52,7 +52,7 @@ public enum UtilizationModel implements Serializable{
      */     
     STOCHASTIC {
         @Override
-        public org.cloudbus.cloudsim.UtilizationModel getModel() {
+        public org.cloudbus.cloudsim.UtilizationModel getModel(String modelAlias) {
             return new UtilizationModelStochastic();
         }
     },
@@ -62,8 +62,14 @@ public enum UtilizationModel implements Serializable{
      */      
     EXTENSION {
         @Override
-        public org.cloudbus.cloudsim.UtilizationModel getModel() {
-            return new UtilizationModelStochastic();
+        public org.cloudbus.cloudsim.UtilizationModel getModel(String modelAlias) {
+            try {
+                Class<?>[] types = new Class<?>[]{int.class};
+                Object[] arguments = new Object[]{};
+                return (org.cloudbus.cloudsim.UtilizationModel) ExtensionsLoader.getExtension("UtilizationModel", modelAlias, types, arguments);
+            } catch (Exception e) {
+                return null;
+            }
         }
     };
     
@@ -73,7 +79,7 @@ public enum UtilizationModel implements Serializable{
      * @return                  a CloudSim's UtilizationModel subtype.
      * @since                   1.0
      */      
-    public abstract org.cloudbus.cloudsim.UtilizationModel getModel();
+    public abstract org.cloudbus.cloudsim.UtilizationModel getModel(String modelAlias);
 
     /** 
      * Gets an instance of utilization model based on its alias.
@@ -97,7 +103,7 @@ public enum UtilizationModel implements Serializable{
      */      
     public static String[] getUtilizationModelNames() {
         String[] nativeModels = new String[]{"Full", "Stochastic"};
-        List<String> extensionModels = ExtensionsLoader.getExtensionsAliasesByBaseClassname("org.cloudbus.cloudsim.UtilizationModel");
+        List<String> extensionModels = ExtensionsLoader.getExtensionsAliasesByType("UtilizationModel");
         extensionModels.addAll(Arrays.asList(nativeModels));
 
         return extensionModels.toArray(new String[0]);

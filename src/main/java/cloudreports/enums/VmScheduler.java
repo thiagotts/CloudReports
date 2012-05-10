@@ -67,7 +67,7 @@ public enum VmScheduler implements Serializable{
             try {
                 Class<?>[] types = new Class<?>[]{List.class};
                 Object[] arguments = new Object[]{peList};
-                return (org.cloudbus.cloudsim.VmScheduler) ExtensionsLoader.getExtension("org.cloudbus.cloudsim.VmScheduler", schedulerAlias, types, arguments);
+                return (org.cloudbus.cloudsim.VmScheduler) ExtensionsLoader.getExtension("VmScheduler", schedulerAlias, types, arguments);
             } catch (Exception e) {
                 return null;
             }
@@ -107,7 +107,7 @@ public enum VmScheduler implements Serializable{
      */    
     public static String[] getVmSchedulerNames() {
         String[] nativePolicies = new String[]{"Space shared", "Time shared"};
-        List<String> extensionPolicies = ExtensionsLoader.getExtensionsAliasesByBaseClassname("org.cloudbus.cloudsim.VmScheduler");
+        List<String> extensionPolicies = ExtensionsLoader.getExtensionsAliasesByType("VmScheduler");
         extensionPolicies.addAll(Arrays.asList(nativePolicies));
 
         return extensionPolicies.toArray(new String[0]);

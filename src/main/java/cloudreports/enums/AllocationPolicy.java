@@ -59,7 +59,7 @@ public enum AllocationPolicy implements Serializable {
             try{
                 Class<?>[] types = new Class<?>[]{ List.class, double.class };
                 Object[] arguments = new Object[]{ hostList, upperUtilizationThreshold };
-                return (VmAllocationPolicy) ExtensionsLoader.getExtension("cloudreports.extensions.vmallocationpolicies.VmAllocationPolicy", policyAlias, types, arguments);
+                return (VmAllocationPolicy) ExtensionsLoader.getExtension("VmAllocationPolicy", policyAlias, types, arguments);
             }
             catch(Exception e) {
                 return null;
@@ -102,7 +102,7 @@ public enum AllocationPolicy implements Serializable {
      */       
     public static String[] getAllocationPoliciesNames() {
         String[] nativePolicies = new String[] {"Single threshold"};
-        List<String> extensionPolicies = ExtensionsLoader.getExtensionsAliasesByBaseClassname("cloudreports.extensions.vmallocationpolicies.VmAllocationPolicy");
+        List<String> extensionPolicies = ExtensionsLoader.getExtensionsAliasesByType("VmAllocationPolicy");
         extensionPolicies.addAll(Arrays.asList(nativePolicies));
         
         return extensionPolicies.toArray(new String[0]);

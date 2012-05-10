@@ -64,7 +64,7 @@ public enum BrokerPolicy implements Serializable {
             try{
                 Class<?>[] types = new Class<?>[]{String.class};
                 Object[] arguments = new Object[]{ customerName };
-                return (DatacenterBroker) ExtensionsLoader.getExtension("cloudreports.extensions.brokers.Broker", brokerAlias, types, arguments);
+                return (DatacenterBroker) ExtensionsLoader.getExtension("Broker", brokerAlias, types, arguments);
             }
             catch(Exception e) {
                 return null;
@@ -103,7 +103,7 @@ public enum BrokerPolicy implements Serializable {
      */      
     public static String[] getBrokerPoliciesNames() {
         String[] nativePolicies = new String[] {"Round robin"};
-        List<String> extensionPolicies = ExtensionsLoader.getExtensionsAliasesByBaseClassname("cloudreports.extensions.brokers.Broker");        
+        List<String> extensionPolicies = ExtensionsLoader.getExtensionsAliasesByType("Broker");        
         extensionPolicies.addAll(Arrays.asList(nativePolicies));
         
         return extensionPolicies.toArray(new String[0]);

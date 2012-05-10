@@ -53,7 +53,7 @@ public enum BwProvisioner {
             try {
                 Class<?>[] types = new Class<?>[]{int.class};
                 Object[] arguments = new Object[]{num};
-                return (org.cloudbus.cloudsim.provisioners.BwProvisioner) ExtensionsLoader.getExtension("org.cloudbus.cloudsim.provisioners.BwProvisioner", provisionerAlias, types, arguments);
+                return (org.cloudbus.cloudsim.provisioners.BwProvisioner) ExtensionsLoader.getExtension("BwProvisioner", provisionerAlias, types, arguments);
             } catch (Exception e) {
                 return null;
             }
@@ -92,7 +92,7 @@ public enum BwProvisioner {
      */        
     public static String[] getBwProvisionerNames() {
         String[] nativeProvisioners = new String[]{"Simple"};
-        List<String> extensionProvisioners = ExtensionsLoader.getExtensionsAliasesByBaseClassname("org.cloudbus.cloudsim.provisioners.BwProvisioner");
+        List<String> extensionProvisioners = ExtensionsLoader.getExtensionsAliasesByType("BwProvisioner");
         extensionProvisioners.addAll(Arrays.asList(nativeProvisioners));
 
         return extensionProvisioners.toArray(new String[0]);

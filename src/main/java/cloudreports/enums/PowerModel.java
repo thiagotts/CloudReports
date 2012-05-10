@@ -90,7 +90,7 @@ public enum PowerModel implements Serializable{
             try {
                 Class<?>[] types = new Class<?>[]{double.class, double.class};
                 Object[] arguments = new Object[]{maxPower, staticPowerPercent};
-                return (org.cloudbus.cloudsim.power.models.PowerModel) ExtensionsLoader.getExtension("org.cloudbus.cloudsim.power.models.PowerModel", modelAlias, types, arguments);
+                return (org.cloudbus.cloudsim.power.models.PowerModel) ExtensionsLoader.getExtension("PowerModel", modelAlias, types, arguments);
             } catch (Exception e) {
                 return null;
             }
@@ -132,7 +132,7 @@ public enum PowerModel implements Serializable{
      */     
     public static String[] getPowerModelNames() {
         String[] nativeModels = new String[]{"Linear", "Square root", "Square", "Cubic"};
-        List<String> extensionModels = ExtensionsLoader.getExtensionsAliasesByBaseClassname("org.cloudbus.cloudsim.power.models.PowerModel");
+        List<String> extensionModels = ExtensionsLoader.getExtensionsAliasesByType("PowerModel");
         extensionModels.addAll(Arrays.asList(nativeModels));
 
         return extensionModels.toArray(new String[0]);
