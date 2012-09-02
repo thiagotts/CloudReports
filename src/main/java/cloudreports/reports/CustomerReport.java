@@ -41,7 +41,7 @@ class CustomerReport {
     /** The name of the customer. */
     private String name;
     
-    /** Number of cloudlets executed per virtual machine. */
+	/** Number of cloudlets executed per virtual machine. */
     private TreeMap<String, Integer> cloudletsPerVm;
     
     /** Cloudlets' start and finish time of execution. */
@@ -80,7 +80,7 @@ class CustomerReport {
      * @param   broker  the customer's broker.
      * @since           1.0
      */    
-    public CustomerReport(DatacenterBroker broker) throws IOException, URISyntaxException {
+    public CustomerReport(DatacenterBroker broker, boolean htmlReportsEnabled, boolean rawDataReportsEnabled) throws IOException, URISyntaxException {
         this.name = broker.getName();
         
         //Get all virtual machines resource utilization data from the database
@@ -113,9 +113,18 @@ class CustomerReport {
             cloudletsPerVm.put("VM"+cloudlet.getVmId(), cloudletsPerVm.get("VM"+cloudlet.getVmId()) + 1);
         }
         
-        generateHtml();
-        generateRawData();
+        if(htmlReportsEnabled) generateHtml();
+        if(rawDataReportsEnabled) generateRawData();
     }
+    
+    /**
+     * Gets the name of the customer.
+     * 
+     * @return  a string that contains the name of the customer.
+     */
+    public String getName() {
+		return name;
+	}
     
     /**
      * Gets the HTML version of the report.

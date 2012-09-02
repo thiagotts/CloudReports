@@ -24,45 +24,58 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="okButton" alignment="1" min="-2" pref="81" max="-2" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="timeToSimulateLabel" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="numOfSimulationsLabel" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="timeToSimulateSpinner" linkSize="2" min="-2" pref="106" max="-2" attributes="1"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                      <Component id="timeToSimulateLabel" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="numOfSimulationsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="minutesLabel" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="numOfSimulationsSpinner" linkSize="2" alignment="0" min="-2" max="-2" attributes="1"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="timeToSimulateSpinner" linkSize="2" min="-2" pref="106" max="-2" attributes="1"/>
+                                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                      <Component id="minutesLabel" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
-                          <Component id="numOfSimulationsSpinner" linkSize="2" min="-2" max="-2" attributes="1"/>
+                          <Component id="htmlReportsCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="rawDataReportsCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="okButton" alignment="1" min="-2" pref="81" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="timeToSimulateLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="timeToSimulateSpinner" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="minutesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="minutesLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="timeToSimulateSpinner" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="timeToSimulateLabel" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="numOfSimulationsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="numOfSimulationsSpinner" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="numOfSimulationsLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="numOfSimulationsSpinner" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="htmlReportsCheckBox" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="rawDataReportsCheckBox" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="okButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -107,14 +120,27 @@
           <SpinnerModel initial="60" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="timeToSimulateSpinnerStateChanged"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="minutesLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="(minutes)"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="htmlReportsCheckBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Generate HTML reports."/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="htmlReportsCheckBoxStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="rawDataReportsCheckBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Generate raw data reports."/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="rawDataReportsCheckBoxStateChanged"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

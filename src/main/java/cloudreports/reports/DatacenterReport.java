@@ -44,7 +44,7 @@ class DatacenterReport {
     /** The name of the datacenter. */
     private String name;
     
-    /** Number of executed cloudlets per host. */
+	/** Number of executed cloudlets per host. */
     private TreeMap<String,Double> executedCloudlets;
     
     /** Number of deployed virtual machines per host. */
@@ -93,7 +93,8 @@ class DatacenterReport {
      * @param   brokersList     a list of all brokers.
      * @since                   1.0
      */           
-    public DatacenterReport(PowerDatacenter datacenter, List<DatacenterBroker> brokersList) throws IOException, URISyntaxException {        
+    public DatacenterReport(PowerDatacenter datacenter, List<DatacenterBroker> brokersList, boolean htmlReportsEnabled,
+    						boolean rawDataReportsEnabled) throws IOException, URISyntaxException {        
         this.name = datacenter.getName();
         
         // Get all hosts resource utilization data from the database
@@ -142,10 +143,19 @@ class DatacenterReport {
             costs.put(broker.getName(), datacenter.getDebts().get(broker.getId()));            
         }
         
-        generateHtml();
-        generateRawData();        
+        if(htmlReportsEnabled) generateHtml();
+        if(rawDataReportsEnabled) generateRawData();        
     }
 
+    /**
+     * Gets the name of the datacenter.
+     * 
+     * @return  a string that contains the name of the datacenter.
+     */
+    public String getName() {
+		return name;
+	}
+    
     /**
      * Gets the HTML version of the report.
      * 

@@ -19,18 +19,20 @@
 
 package cloudreports.dao;
 
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
 import cloudreports.database.Database;
 import cloudreports.database.HibernateUtil;
 import cloudreports.models.CustomerRegistry;
 import cloudreports.models.UtilizationProfile;
 import cloudreports.models.VirtualMachineRegistry;
 import cloudreports.utils.LongOperations;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 /**
  * CustomerRegistryDAO provides basic CRUD operations related to the 
@@ -103,7 +105,7 @@ public class CustomerRegistryDAO {
         }
         
         return customer;
-    }   
+    }
     
     /** 
      * Gets an existing customer with the given id.

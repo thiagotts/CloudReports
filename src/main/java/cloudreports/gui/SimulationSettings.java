@@ -31,15 +31,36 @@ import cloudreports.models.Setting;
  */
 public class SimulationSettings extends javax.swing.JDialog {
 
+    /** A private instance of the SettingDAO class. */
+    private SettingDAO sDAO;
+    
     /** Creates a new SimulationSettings form. */
     public SimulationSettings() {
         setModal(true);
         initComponents();
-        SettingDAO sDAO = new SettingDAO();
+        sDAO = new SettingDAO();
+        
         Setting numberOfSimulations = sDAO.getSetting("NumberOfSimulations");
         numOfSimulationsSpinner.setValue(Integer.valueOf(numberOfSimulations.getValue()));     
+        
         Setting timeToSimulate = sDAO.getSetting("TimeToSimulate");
         timeToSimulateSpinner.setValue(Integer.valueOf(timeToSimulate.getValue()));
+        
+        Setting htmlReportsEnabled = sDAO.getSetting("HtmlReports");
+        if(htmlReportsEnabled == null) {
+        	htmlReportsEnabled = new Setting("HtmlReports", "true");
+        	sDAO.insertSetting(htmlReportsEnabled);
+        }
+        htmlReportsCheckBox.setSelected(Boolean.valueOf(htmlReportsEnabled.getValue()));
+        htmlReportsCheckBoxStateChanged(null);
+        
+        Setting rawDataReportsEnabled = sDAO.getSetting("RawDataReports");
+        if(rawDataReportsEnabled == null) {
+        	rawDataReportsEnabled = new Setting("RawDataReports", "true");
+        	sDAO.insertSetting(rawDataReportsEnabled);
+        }
+        rawDataReportsCheckBox.setSelected(Boolean.valueOf(rawDataReportsEnabled.getValue()));
+        rawDataReportsCheckBoxStateChanged(null);
     }
 
     /** This method is called from within the constructor to
@@ -57,6 +78,8 @@ public class SimulationSettings extends javax.swing.JDialog {
         timeToSimulateLabel = new javax.swing.JLabel();
         timeToSimulateSpinner = new javax.swing.JSpinner();
         minutesLabel = new javax.swing.JLabel();
+        htmlReportsCheckBox = new javax.swing.JCheckBox();
+        rawDataReportsCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Simulation settings");
@@ -82,34 +105,49 @@ public class SimulationSettings extends javax.swing.JDialog {
         timeToSimulateLabel.setText("Time to simulate:");
 
         timeToSimulateSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(60), Integer.valueOf(1), null, Integer.valueOf(1)));
-        timeToSimulateSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+
+        minutesLabel.setText("(minutes)");
+
+        htmlReportsCheckBox.setText("Generate HTML reports.");
+        htmlReportsCheckBox.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                timeToSimulateSpinnerStateChanged(evt);
+                htmlReportsCheckBoxStateChanged(evt);
             }
         });
 
-        minutesLabel.setText("(minutes)");
+        rawDataReportsCheckBox.setText("Generate raw data reports.");
+        rawDataReportsCheckBox.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rawDataReportsCheckBoxStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(timeToSimulateLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(numOfSimulationsLabel, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(timeToSimulateSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(43, 43, 43)
+                                        .addComponent(timeToSimulateLabel))
+                                    .addComponent(numOfSimulationsLabel))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(minutesLabel))
-                            .addComponent(numOfSimulationsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(numOfSimulationsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(timeToSimulateSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(4, 4, 4)
+                                        .addComponent(minutesLabel))))
+                            .addComponent(htmlReportsCheckBox)
+                            .addComponent(rawDataReportsCheckBox)))
+                    .addComponent(okButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {numOfSimulationsSpinner, timeToSimulateSpinner});
@@ -117,16 +155,20 @@ public class SimulationSettings extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(timeToSimulateLabel)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(minutesLabel)
                     .addComponent(timeToSimulateSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(minutesLabel))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(timeToSimulateLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(numOfSimulationsLabel)
                     .addComponent(numOfSimulationsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(htmlReportsCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rawDataReportsCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(okButton)
                 .addContainerGap())
         );
@@ -137,6 +179,66 @@ public class SimulationSettings extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     /** 
+     * Saves the state of all components and closes the form when the OK button is clicked.
+     *
+     * @param   evt     an action event.
+     * @since           1.0
+     */        
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        Setting numberOfSimulations = sDAO.getSetting("NumberOfSimulations");
+        numberOfSimulations.setValue(String.valueOf(numOfSimulationsSpinner.getValue()));
+        sDAO.updateSetting(numberOfSimulations);
+        
+        Setting timeToSimulate = sDAO.getSetting("TimeToSimulate");
+        timeToSimulate.setValue(String.valueOf(timeToSimulateSpinner.getValue()));
+        sDAO.updateSetting(timeToSimulate);
+        
+        Setting htmlReportsEnabled = sDAO.getSetting("HtmlReports");
+        htmlReportsEnabled.setValue(String.valueOf(htmlReportsCheckBox.isSelected()));
+        sDAO.updateSetting(htmlReportsEnabled);
+        
+        Setting rawDataReportsEnabled = sDAO.getSetting("RawDataReports");
+        rawDataReportsEnabled.setValue(String.valueOf(rawDataReportsCheckBox.isSelected()));
+        sDAO.updateSetting(rawDataReportsEnabled);
+        
+        this.dispose();
+    }//GEN-LAST:event_okButtonActionPerformed
+
+    /** 
+     * Enables/disables the generation of HTML reports according to the state of
+     * the checkbox.
+     *
+     * @param   evt     a change event.
+     * @since           1.1
+     */   
+    private void htmlReportsCheckBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_htmlReportsCheckBoxStateChanged
+        if(htmlReportsCheckBox.isSelected()) {
+            rawDataReportsCheckBox.setEnabled(true);
+        }
+        else {
+            rawDataReportsCheckBox.setSelected(true);
+            rawDataReportsCheckBox.setEnabled(false);
+        }
+    }//GEN-LAST:event_htmlReportsCheckBoxStateChanged
+
+    /** 
+     * Enables/disables the generation of raw data reports according to the state of
+     * the checkbox.
+     *
+     * @param   evt     a change event.
+     * @since           1.1
+     */  
+    private void rawDataReportsCheckBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rawDataReportsCheckBoxStateChanged
+        if(rawDataReportsCheckBox.isSelected()) {
+            htmlReportsCheckBox.setEnabled(true);
+        }
+        else {
+            htmlReportsCheckBox.setSelected(true);
+            htmlReportsCheckBox.setEnabled(false);
+        }
+    }//GEN-LAST:event_rawDataReportsCheckBoxStateChanged
+
+    /** 
      * Changes the number of simulations to be performed whenever the state of the
      * simulations spinner changes.
      *
@@ -144,41 +246,16 @@ public class SimulationSettings extends javax.swing.JDialog {
      * @since           1.0
      */       
     private void numOfSimulationsSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_numOfSimulationsSpinnerStateChanged
-        SettingDAO sDAO = new SettingDAO();
-        Setting numberOfSimulations = sDAO.getSetting("NumberOfSimulations");
-        numberOfSimulations.setValue(String.valueOf(numOfSimulationsSpinner.getValue()));
-        sDAO.updateSetting(numberOfSimulations);
+
     }//GEN-LAST:event_numOfSimulationsSpinnerStateChanged
 
-    /** 
-     * Closes the form when the OK button is clicked.
-     *
-     * @param   evt     an action event.
-     * @since           1.0
-     */        
-    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_okButtonActionPerformed
-
-    /** 
-     * Changes the time to be simulated by each performed simulation whenever
-     * the state of the time to simulate spinner changes.
-     *
-     * @param   evt     a change event.
-     * @since           1.0
-     */       
-    private void timeToSimulateSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_timeToSimulateSpinnerStateChanged
-        SettingDAO sDAO = new SettingDAO();
-        Setting timeToSimulate = sDAO.getSetting("TimeToSimulate");
-        timeToSimulate.setValue(String.valueOf(timeToSimulateSpinner.getValue()));
-        sDAO.updateSetting(timeToSimulate);
-    }//GEN-LAST:event_timeToSimulateSpinnerStateChanged
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox htmlReportsCheckBox;
     private javax.swing.JLabel minutesLabel;
     private javax.swing.JLabel numOfSimulationsLabel;
     private javax.swing.JSpinner numOfSimulationsSpinner;
     private javax.swing.JButton okButton;
+    private javax.swing.JCheckBox rawDataReportsCheckBox;
     private javax.swing.JLabel timeToSimulateLabel;
     private javax.swing.JSpinner timeToSimulateSpinner;
     // End of variables declaration//GEN-END:variables

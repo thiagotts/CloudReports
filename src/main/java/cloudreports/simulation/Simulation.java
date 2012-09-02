@@ -31,6 +31,7 @@ import cloudreports.models.Setting;
 import cloudreports.reports.DataCollector;
 import cloudreports.reports.Report;
 import cloudreports.utils.*;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -120,7 +121,11 @@ public class Simulation implements Runnable {
         }
 
         int numberOfSimulations = Integer.valueOf(sDAO.getSetting("NumberOfSimulations").getValue());
-        new File("reports/" + HibernateUtil.getActiveDatabase()).mkdirs();
+        String baseDirectory = FileIO.getPathOfExecutable();
+        File reportsDirectory = new File(baseDirectory + "reports/" + HibernateUtil.getActiveDatabase());
+        if(reportsDirectory.exists()) 
+        	FileIO.deleteDirectory(reportsDirectory);
+        reportsDirectory.mkdirs();
 
         //Begin of simulations loop
         for (int simulationId = 1; simulationId <= numberOfSimulations; simulationId++) {

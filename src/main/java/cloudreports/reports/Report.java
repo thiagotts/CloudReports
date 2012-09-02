@@ -34,6 +34,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import org.cloudbus.cloudsim.DatacenterBroker;
@@ -51,6 +52,12 @@ public class Report {
     /** The report's base directory. */
     private static String baseDirectory;
     
+    /** Indicates whether HTML reports must be generated. */
+    private static boolean htmlReportsEnabled;
+    
+    /** Indicates whether raw data reports must be generated. */
+    private static boolean rawDataReportsEnabled;
+    
     /** 
      * Generates a full report.
      * 
@@ -65,12 +72,16 @@ public class Report {
         baseDirectory = FileIO.getPathOfExecutable();        
         int simulationId = Integer.valueOf(new SettingDAO().getSetting("CurrentSimulation").getValue());
         baseDirectory += "reports/" + HibernateUtil.getActiveDatabase() + "/report" + simulationId;
+        
+        SettingDAO sDAO = new SettingDAO();
+        htmlReportsEnabled = Boolean.valueOf(sDAO.getSetting("HtmlReports").getValue());
+        rawDataReportsEnabled = Boolean.valueOf(sDAO.getSetting("RawDataReports").getValue());
 
-        createDirectoryTree();        
-        createOverallReport(datacentersList, brokersList, elapsedTime);
+        createDirectoryTree();
+        if(htmlReportsEnabled) createOverallReport(datacentersList, brokersList, elapsedTime);
         createDatacentersReports(datacentersList, brokersList);
         createCustomersReports(brokersList);
-        createLogReport(datacentersList, brokersList);
+        if(htmlReportsEnabled) createLogReport(datacentersList, brokersList);
     }
     
     /** 
@@ -83,17 +94,41 @@ public class Report {
      * @since                       1.0
      */     
     private static void createDirectoryTree() throws IOException, URISyntaxException {
-        File tempDir = new File(baseDirectory + "/provider");
+		if(htmlReportsEnabled) createHtmlDirectoryTree();        
+		if(rawDataReportsEnabled) createRawDataDirectoryTree();
+    }
+
+    /** 
+     * Creates the raw data report's directory tree.
+     * 
+     * @throws  IOException         if any of the directories or files could 
+     *                              not be created.
+     * @since                       1.1
+     */     
+	private static void createRawDataDirectoryTree() throws IOException {
+		File tempDir = new File(baseDirectory + "/raw");
+        tempDir.mkdirs();
+        File tempRawData = new File(baseDirectory + "/raw/rawData.crd");
+        if(tempRawData.exists()) tempRawData.delete();
+        tempRawData.createNewFile();
+	}
+
+    /** 
+     * Creates the HTML report's directory tree.
+     * 
+     * @throws  IOException         if any of the directories or files could 
+     *                              not be created.
+     * @throws  URISyntaxException  if any of the used paths could not be parsed
+     *                              successfully.
+     * @since                       1.0
+     */     	
+	private static void createHtmlDirectoryTree() throws URISyntaxException, IOException {
+		File tempDir = new File(baseDirectory + "/provider");
         tempDir.mkdirs();
         tempDir = new File(baseDirectory + "/customers");
         tempDir.mkdir();
         tempDir = new File(baseDirectory + "/log");
         tempDir.mkdir();
-        tempDir = new File(baseDirectory + "/raw");
-        tempDir.mkdir();
-        File tempRawData = new File(baseDirectory + "/raw/rawData.crd");
-        if(tempRawData.exists()) tempRawData.delete();
-        tempRawData.createNewFile();
         
         //Create the CSS directory and file
         tempDir = new File(baseDirectory + "/css");
@@ -119,9 +154,8 @@ public class Report {
             if (tempFile.isEmpty()) continue;
             tempString = FileIO.readStringFromResource("cloudreports/gui/reports/resources/js/" + tempFile);
             FileIO.writeStringToFile(baseDirectory + "/js/" + tempFile, tempString);
-        }        
-        
-    }    
+        }
+	}    
     
     /** 
      * Creates the overall report.
@@ -195,29 +229,41 @@ public class Report {
      */       
     private static void createDatacentersReports(List<PowerDatacenter> datacentersList,
                                                  List<DatacenterBroker> brokersList) throws IOException, URISyntaxException {
-        String html = FileIO.readStringFromResource("cloudreports/gui/reports/resources/datacenters.html");
         
-        StringBuilder datacenterOptions = new StringBuilder();
-        StringBuilder datacentersHtmlList = new StringBuilder();
-        for(PowerDatacenter datacenter : datacentersList) {
-            //Insert option element
-            datacenterOptions.append("<option value=\"datacenter_");
-            datacenterOptions.append(datacenter.getName());
-            datacenterOptions.append("\">");
-            datacenterOptions.append(datacenter.getName());
-            datacenterOptions.append("</option>\n");
-            
-            //Insert this datacenter's html report and raw data
-            DatacenterReport datacenterReport = new DatacenterReport(datacenter, brokersList);
-            if(datacentersList.indexOf(datacenter) == 0) datacentersHtmlList.append(datacenterReport.getHtml().replace("id=\"datacenter_" + datacenter.getName() + "\" style=\"display: none;\"", "id=\"datacenter_" + datacenter.getName() + "\""));
-            else datacentersHtmlList.append(datacenterReport.getHtml());
-            FileIO.appendStringToFile(baseDirectory + "/raw/rawData.crd", datacenterReport.getRawData());
+    	List<DatacenterReport> datacenterReports = new ArrayList<DatacenterReport>();
+    	for(PowerDatacenter datacenter : datacentersList) {
+    		DatacenterReport datacenterReport = new DatacenterReport(datacenter, brokersList, htmlReportsEnabled, rawDataReportsEnabled);
+    		datacenterReports.add(datacenterReport);    		
+    	}
+    	
+    	if(htmlReportsEnabled) {    		
+	    	String html = FileIO.readStringFromResource("cloudreports/gui/reports/resources/datacenters.html");	        
+	        StringBuilder datacenterOptions = new StringBuilder();
+	        StringBuilder datacentersHtmlList = new StringBuilder();
+	        for(DatacenterReport report : datacenterReports) {
+	            //Insert option element
+	            datacenterOptions.append("<option value=\"datacenter_");
+	            datacenterOptions.append(report.getName());
+	            datacenterOptions.append("\">");
+	            datacenterOptions.append(report.getName());
+	            datacenterOptions.append("</option>\n");
+	            
+	            if (datacenterReports.indexOf(report) == 0) 
+	            	datacentersHtmlList.append(report.getHtml().replace("id=\"datacenter_" + report.getName() + "\" style=\"display: none;\"", "id=\"datacenter_" + report.getName()+ "\""));
+	            else 
+	            	datacentersHtmlList.append(report.getHtml());				
+	        }
+	        
+	        html = html.replace("<!--INSERT_DATACENTER_OPTIONS-->", datacenterOptions.toString());
+	        html = html.replace("<!--INSERT_DATACENTERS_LIST-->", datacentersHtmlList.toString());	        
+	        if(htmlReportsEnabled) FileIO.writeStringToFile(baseDirectory + "/provider/datacenters.html", html);        
         }
-        
-        html = html.replace("<!--INSERT_DATACENTER_OPTIONS-->", datacenterOptions.toString());
-        html = html.replace("<!--INSERT_DATACENTERS_LIST-->", datacentersHtmlList.toString());
-        
-        FileIO.writeStringToFile(baseDirectory + "/provider/datacenters.html", html);
+    	
+    	if(rawDataReportsEnabled) {
+    		for(DatacenterReport report : datacenterReports) {
+    			FileIO.appendStringToFile(baseDirectory + "/raw/rawData.crd", report.getRawData());    			
+    		}
+    	}
     }
 
     /** 
@@ -231,29 +277,40 @@ public class Report {
      * @since                       1.0
      */     
     private static void createCustomersReports(List<DatacenterBroker> brokersList) throws IOException, URISyntaxException {
-        String html = FileIO.readStringFromResource("cloudreports/gui/reports/resources/customers.html");
-
-        StringBuilder customerOptions = new StringBuilder();
-        StringBuilder customersHtmlList = new StringBuilder();
+        List<CustomerReport> customerReports = new ArrayList<CustomerReport>();
         for (DatacenterBroker broker : brokersList) {
-            //Insert option element
-            customerOptions.append("<option value=\"customer_");
-            customerOptions.append(broker.getName());
-            customerOptions.append("\">");
-            customerOptions.append(broker.getName());
-            customerOptions.append("</option>\n");
+        	CustomerReport customerReport = new CustomerReport(broker, htmlReportsEnabled, rawDataReportsEnabled);
+        	customerReports.add(customerReport);
+        }        
+    	
+        if(htmlReportsEnabled) {
+        	String html = FileIO.readStringFromResource("cloudreports/gui/reports/resources/customers.html");
+            StringBuilder customerOptions = new StringBuilder();
+            StringBuilder customersHtmlList = new StringBuilder();
+            for (CustomerReport report : customerReports) {
+                //Insert option element
+                customerOptions.append("<option value=\"customer_");
+                customerOptions.append(report.getName());
+                customerOptions.append("\">");
+                customerOptions.append(report.getName());
+                customerOptions.append("</option>\n");
 
-            //Insert this customer's html report and raw data
-            CustomerReport customerReport = new CustomerReport(broker);
-            if(brokersList.indexOf(broker) == 0) customersHtmlList.append(customerReport.getHtml().replace("id=\"customer_" + broker.getName() + "\" style=\"display: none;\"", "id=\"customer_" + broker.getName() + "\""));
-            else customersHtmlList.append(customerReport.getHtml());
-            FileIO.appendStringToFile(baseDirectory + "/raw/rawData.crd", customerReport.getRawData());
+                if(customerReports.indexOf(report) == 0) 
+                	customersHtmlList.append(report.getHtml().replace("id=\"customer_" + report.getName() + "\" style=\"display: none;\"", "id=\"customer_" + report.getName() + "\""));
+                else 
+                	customersHtmlList.append(report.getHtml());
+            }
+
+            html = html.replace("<!--INSERT_CUSTOMER_OPTIONS-->", customerOptions.toString());
+            html = html.replace("<!--INSERT_CUSTOMERS_LIST-->", customersHtmlList.toString());
+            if(htmlReportsEnabled) FileIO.writeStringToFile(baseDirectory + "/customers/customers.html", html);        	
         }
-
-        html = html.replace("<!--INSERT_CUSTOMER_OPTIONS-->", customerOptions.toString());
-        html = html.replace("<!--INSERT_CUSTOMERS_LIST-->", customersHtmlList.toString());
-
-        FileIO.writeStringToFile(baseDirectory + "/customers/customers.html", html);
+        
+        if(rawDataReportsEnabled) {
+        	for (CustomerReport report : customerReports) {
+        		FileIO.appendStringToFile(baseDirectory + "/raw/rawData.crd", report.getRawData());        		
+        	}
+        }
     }
 
     /** 
