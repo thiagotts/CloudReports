@@ -5,10 +5,9 @@
 	<groupId>cloudreports</groupId>
 	<artifactId>cloudreports</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0</version>
+	<version>1.1</version>
 	<name>CloudReports</name>
-	<description>
-		CloudReports is a graphic tool that simulates distributed computing environments based on the Cloud Computing paradigm. It uses CloudSim as its simulation engine and provides an easy-to-use user interface, report generation features and creation of extensions in a plugin fashion.		
+	<description>CloudReports is a graphic tool that simulates distributed computing environments based on the Cloud Computing paradigm. It uses CloudSim as its simulation engine and provides an easy-to-use user interface, report generation features and creation of extensions in a plugin fashion.		
 	</description>
 	<repositories>
 		<repository>
