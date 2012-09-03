@@ -19,6 +19,7 @@
 
 package cloudreports.utils;
 
+import cloudreports.business.SettingBusiness;
 import cloudreports.dao.SettingDAO;
 import cloudreports.enums.RandomNumbersFactory;
 import java.util.List;
@@ -38,7 +39,7 @@ public class RandomNumberGenerator {
      * @since           1.0
      */       
     public static List<Double> getRandomNumbers(int amount) {
-        int source = Integer.valueOf(new SettingDAO().getSetting("Randomness").getValue());
+        int source = SettingBusiness.getRandomnessOption();
         return RandomNumbersFactory.getInstance(source).getRandomNumbers(amount);
     }
     

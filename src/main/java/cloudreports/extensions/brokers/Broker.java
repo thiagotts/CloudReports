@@ -19,6 +19,7 @@
 
 package cloudreports.extensions.brokers;
 
+import cloudreports.business.SettingBusiness;
 import cloudreports.dao.CustomerRegistryDAO;
 import cloudreports.dao.SettingDAO;
 import cloudreports.enums.BrokerPolicy;
@@ -129,26 +130,19 @@ public abstract class Broker extends DatacenterBroker {
             Log.printLine(CloudSim.clock()+": "+getName()+ ": Cloudlet "+cloudlet.getCloudletId()+" received");
             cloudletsSubmitted -= 1;
             
-            SettingDAO sDAO = new SettingDAO();
-            if(CloudSim.clock() <= Integer.valueOf(sDAO.getSetting("TimeToSimulate").getValue())*60) {
-                Cloudlet newCloudlet = new Cloudlet(this.cloudletId,
-                                                    (long) ((long)this.maxLengthOfCloudlets *  RandomNumberGenerator.getRandomNumbers(1).get(0)),
-                                                    cloudlet.getNumberOfPes(),
-                                                    cloudlet.getCloudletLength(),
-                                                    cloudlet.getCloudletOutputSize(),
-                                                    cloudlet.getUtilizationModelCpu(),
-                                                    cloudlet.getUtilizationModelRam(),
-                                                    cloudlet.getUtilizationModelBw());
-                newCloudlet.setUserId(getId());
-                newCloudlet.setVmId(cloudlet.getVmId());
-                getCloudletList().add(newCloudlet);
-                this.cloudletId++;
-                submitCloudlets();
-            }
-            else {
-                CloudSim.abruptallyTerminate();
-                CloudSim.stopSimulation();
-            }
+            Cloudlet newCloudlet = new Cloudlet(this.cloudletId,
+                                                (long) ((long)this.maxLengthOfCloudlets *  RandomNumberGenerator.getRandomNumbers(1).get(0)),
+                                                cloudlet.getNumberOfPes(),
+                                                cloudlet.getCloudletLength(),
+                                                cloudlet.getCloudletOutputSize(),
+                                                cloudlet.getUtilizationModelCpu(),
+                                                cloudlet.getUtilizationModelRam(),
+                                                cloudlet.getUtilizationModelBw());
+            newCloudlet.setUserId(getId());
+            newCloudlet.setVmId(cloudlet.getVmId());
+            getCloudletList().add(newCloudlet);
+            this.cloudletId++;
+            submitCloudlets();
     }
 
     /** 

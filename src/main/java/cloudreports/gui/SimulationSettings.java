@@ -19,6 +19,7 @@
 
 package cloudreports.gui;
 
+import cloudreports.business.SettingBusiness;
 import cloudreports.dao.SettingDAO;
 import cloudreports.models.Setting;
 
@@ -40,26 +41,11 @@ public class SimulationSettings extends javax.swing.JDialog {
         initComponents();
         sDAO = new SettingDAO();
         
-        Setting numberOfSimulations = sDAO.getSetting("NumberOfSimulations");
-        numOfSimulationsSpinner.setValue(Integer.valueOf(numberOfSimulations.getValue()));     
-        
-        Setting timeToSimulate = sDAO.getSetting("TimeToSimulate");
-        timeToSimulateSpinner.setValue(Integer.valueOf(timeToSimulate.getValue()));
-        
-        Setting htmlReportsEnabled = sDAO.getSetting("HtmlReports");
-        if(htmlReportsEnabled == null) {
-        	htmlReportsEnabled = new Setting("HtmlReports", "true");
-        	sDAO.insertSetting(htmlReportsEnabled);
-        }
-        htmlReportsCheckBox.setSelected(Boolean.valueOf(htmlReportsEnabled.getValue()));
+        numOfSimulationsSpinner.setValue(SettingBusiness.getNumberOfSimulations());        
+        timeToSimulateSpinner.setValue(SettingBusiness.getTimeToSimulate());        
+        htmlReportsCheckBox.setSelected(SettingBusiness.isHtmlReportsEnabled());
         htmlReportsCheckBoxStateChanged(null);
-        
-        Setting rawDataReportsEnabled = sDAO.getSetting("RawDataReports");
-        if(rawDataReportsEnabled == null) {
-        	rawDataReportsEnabled = new Setting("RawDataReports", "true");
-        	sDAO.insertSetting(rawDataReportsEnabled);
-        }
-        rawDataReportsCheckBox.setSelected(Boolean.valueOf(rawDataReportsEnabled.getValue()));
+        rawDataReportsCheckBox.setSelected(SettingBusiness.isRawDataReportsEnabled());
         rawDataReportsCheckBoxStateChanged(null);
     }
 

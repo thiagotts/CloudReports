@@ -19,6 +19,7 @@
 
 package cloudreports.gui;
 
+import cloudreports.business.SettingBusiness;
 import cloudreports.dao.SettingDAO;
 import cloudreports.models.Setting;
 
@@ -40,14 +41,13 @@ public class MailNotificationSettings extends javax.swing.JDialog {
         initComponents();
         
         this.sDAO = new SettingDAO();
-        Setting isMailNotificationEnabled = sDAO.getSetting("EnableMailNotification");
-        if(isMailNotificationEnabled.getValue().equals("0")) {
-            enableCheckBox.setSelected(false);
-            setMailSettingsEnabled(false);
-        }
-        else {
+        if(SettingBusiness.isMailNotificationEnabled()) {
             enableCheckBox.setSelected(true);
             setMailSettingsEnabled(true);
+        }
+        else {
+            enableCheckBox.setSelected(false);
+            setMailSettingsEnabled(false);
         }
             
         Setting receiverAddress;
@@ -237,13 +237,13 @@ public class MailNotificationSettings extends javax.swing.JDialog {
     private void enableCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enableCheckBoxActionPerformed
         if(enableCheckBox.isSelected()) {
             Setting isMailNotificationEnabled = sDAO.getSetting("EnableMailNotification");
-            isMailNotificationEnabled.setValue("1");
+            isMailNotificationEnabled.setValue("true");
             sDAO.updateSetting(isMailNotificationEnabled);
             setMailSettingsEnabled(true);
         }
         else {
             Setting isMailNotificationEnabled = sDAO.getSetting("EnableMailNotification");
-            isMailNotificationEnabled.setValue("0");
+            isMailNotificationEnabled.setValue("false");
             sDAO.updateSetting(isMailNotificationEnabled);
             setMailSettingsEnabled(false);
         }

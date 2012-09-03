@@ -19,6 +19,7 @@
 
 package cloudreports.reports;
 
+import cloudreports.business.SettingBusiness;
 import cloudreports.dao.CustomerRegistryDAO;
 import cloudreports.dao.DatacenterRegistryDAO;
 import cloudreports.dao.SettingDAO;
@@ -70,12 +71,12 @@ public class Report {
                                       ElapsedTime elapsedTime) throws IOException, URISyntaxException {
         
         baseDirectory = FileIO.getPathOfExecutable();        
-        int simulationId = Integer.valueOf(new SettingDAO().getSetting("CurrentSimulation").getValue());
+        int simulationId = SettingBusiness.getCurrentSimulation();
         baseDirectory += "reports/" + HibernateUtil.getActiveDatabase() + "/report" + simulationId;
         
         SettingDAO sDAO = new SettingDAO();
-        htmlReportsEnabled = Boolean.valueOf(sDAO.getSetting("HtmlReports").getValue());
-        rawDataReportsEnabled = Boolean.valueOf(sDAO.getSetting("RawDataReports").getValue());
+        htmlReportsEnabled = SettingBusiness.isHtmlReportsEnabled();
+        rawDataReportsEnabled = SettingBusiness.isRawDataReportsEnabled();
 
         createDirectoryTree();
         if(htmlReportsEnabled) createOverallReport(datacentersList, brokersList, elapsedTime);

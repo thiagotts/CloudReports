@@ -19,6 +19,7 @@
 
 package cloudreports.reports;
 
+import cloudreports.business.SettingBusiness;
 import cloudreports.dao.MigrationDAO;
 import cloudreports.dao.ReportDataDAO;
 import cloudreports.dao.SettingDAO;
@@ -133,7 +134,7 @@ public class DataCollector {
             double overallRam = 0,
                    overallCpu = 0,
                    overallBandwidth = 0;
-            int currentSimulation = Integer.valueOf(new SettingDAO().getSetting("CurrentSimulation").getValue());
+            int currentSimulation = SettingBusiness.getCurrentSimulation();
             
             List<Vm> vmsList = broker.getVmList();
             for(Vm vm : vmsList) {
@@ -175,7 +176,7 @@ public class DataCollector {
                    overallCpu = 0,
                    overallBandwidth = 0,
                    overallPower = 0;   
-            int currentSimulation = Integer.valueOf(new SettingDAO().getSetting("CurrentSimulation").getValue());
+            int currentSimulation = SettingBusiness.getCurrentSimulation();
             
             List<PowerHost> hostsList = datacenter.getHostList();
             for(PowerHost host : hostsList) {
@@ -219,7 +220,7 @@ public class DataCollector {
         List<String> brokerNames = Arrays.asList(brokers.keySet().toArray(new String[0]));
         ReportDataDAO rdDAO = new ReportDataDAO();
         double currentTime = time;
-        int currentSimulation = Integer.valueOf(new SettingDAO().getSetting("CurrentSimulation").getValue());
+        int currentSimulation = SettingBusiness.getCurrentSimulation();
         
         for (String brokerName : brokerNames) {
             DatacenterBroker broker = brokers.get(brokerName);

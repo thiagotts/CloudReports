@@ -19,6 +19,7 @@
 
 package cloudreports.gui;
 
+import cloudreports.business.SettingBusiness;
 import cloudreports.dao.SettingDAO;
 import cloudreports.models.Setting;
 import java.util.Random;
@@ -43,8 +44,7 @@ public class RandomnessSettings extends javax.swing.JDialog {
         buttonGroup.add(QRBGRadioButton);
         
         this.sDAO = new SettingDAO();
-        Setting randomnessSource = sDAO.getSetting("Randomness");
-        if(randomnessSource.getValue().equals("0")) {
+        if(SettingBusiness.getRandomnessOption() == 0) {
             JavaRadioButton.setSelected(true);
             setQRBGSettingsEnabled(false);
         }

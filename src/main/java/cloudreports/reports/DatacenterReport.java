@@ -19,6 +19,7 @@
 
 package cloudreports.reports;
 
+import cloudreports.business.SettingBusiness;
 import cloudreports.dao.MigrationDAO;
 import cloudreports.dao.ReportDataDAO;
 import cloudreports.dao.SettingDAO;
@@ -310,7 +311,7 @@ class DatacenterReport {
      */           
     private void generateRawData() throws IOException, URISyntaxException {
         StringBuilder rawDataStringBuilder = new StringBuilder();
-        int simulationId = Integer.valueOf(new SettingDAO().getSetting("CurrentSimulation").getValue());
+        int simulationId = SettingBusiness.getCurrentSimulation();
         
         rawDataStringBuilder.append(getRawDataString(overallUsedRam, "Sim" + simulationId + "_" + this.name + "_overall_ram"));
         rawDataStringBuilder.append(getRawDataString(overallUsedCpu, "Sim" + simulationId + "_" + this.name + "_overall_cpu"));

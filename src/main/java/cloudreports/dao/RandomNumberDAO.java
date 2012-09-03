@@ -19,6 +19,7 @@
 
 package cloudreports.dao;
 
+import cloudreports.business.SettingBusiness;
 import cloudreports.database.Database;
 import cloudreports.database.HibernateUtil;
 import cloudreports.enums.RandomNumbersFactory;
@@ -69,8 +70,7 @@ public class RandomNumberDAO {
      * @since                              1.0
      */        
     private void insertMoreNumbersInPool() throws IOException, ServiceDeniedException {        
-        SettingDAO sDAO = new SettingDAO();  
-        QRBG source = new QRBG(sDAO.getSetting("QRBGusername").getValue(), sDAO.getSetting("QRBGpassword").getValue());
+        QRBG source = new QRBG(SettingBusiness.getQRBGUsername(), SettingBusiness.getQRBGPassword());
         for(int request = 0; request < NUMBER_OF_REQUESTS; request++) {        
             byte[] buffer = new byte[NUMBER_OF_BYTES];
             source.getBytes(buffer, NUMBER_OF_BYTES);        

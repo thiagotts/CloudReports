@@ -19,6 +19,7 @@
 
 package cloudreports.reports;
 
+import cloudreports.business.SettingBusiness;
 import cloudreports.dao.ReportDataDAO;
 import cloudreports.dao.SettingDAO;
 import cloudreports.utils.FileIO;
@@ -325,7 +326,7 @@ class CustomerReport {
      */     
     private void generateRawData() {
         StringBuilder rawDataStringBuilder = new StringBuilder("");
-        int simulationId = Integer.valueOf(new SettingDAO().getSetting("CurrentSimulation").getValue());
+        int simulationId = SettingBusiness.getCurrentSimulation();
 
         rawDataStringBuilder.append(getRawDataString(overallUsedRam, "Sim" + simulationId + "_" + this.name + "_overall_ram"));
         rawDataStringBuilder.append(getRawDataString(overallUsedCpu, "Sim" + simulationId + "_" + this.name + "_overall_cpu"));

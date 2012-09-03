@@ -19,6 +19,8 @@
 
 package cloudreports.simulation;
 
+import cloudreports.business.CustomerRegistryBusiness;
+import cloudreports.business.DatacenterRegistryBusiness;
 import cloudreports.dao.CustomerRegistryDAO;
 import cloudreports.dao.DatacenterRegistryDAO;
 import cloudreports.dao.NetworkMapEntryDAO;
@@ -60,7 +62,8 @@ public class EntityFactory {
      *                  PowerDatacenter instances as values.
      * @since           1.0
      */    
-    static HashMap<String, PowerDatacenter> createDatacenters(List<DatacenterRegistry> dcrList) {
+    static HashMap<String, PowerDatacenter> createDatacenters() {
+        List<DatacenterRegistry> dcrList = DatacenterRegistryBusiness.getListOfDatacenters();
         HashMap<String, PowerDatacenter> map = new HashMap<String, PowerDatacenter>();
 
         for (DatacenterRegistry dcr : dcrList) {
@@ -220,7 +223,8 @@ public class EntityFactory {
      *                          DatacenterBroker instances as values.
      * @since                   1.0
      */     
-    static HashMap<String, DatacenterBroker> createBrokers(List<CustomerRegistry> customerList) {
+    static HashMap<String, DatacenterBroker> createBrokers() {
+        List<CustomerRegistry> customerList = CustomerRegistryBusiness.getListOfCustomers();
         HashMap<String, DatacenterBroker> map = new HashMap<String, DatacenterBroker>();
 
         try {

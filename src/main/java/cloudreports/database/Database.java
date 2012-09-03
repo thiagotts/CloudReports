@@ -116,7 +116,7 @@ public class Database {
 		stat.executeUpdate("INSERT INTO Settings VALUES (0,'Randomness','0')");
 		stat.executeUpdate("INSERT INTO Settings VALUES (1,'NumberOfSimulations','1')");
 		stat.executeUpdate("INSERT INTO Settings VALUES (2,'CurrentSimulation','1')");
-		stat.executeUpdate("INSERT INTO Settings VALUES (3,'EnableMailNotification','0')");
+		stat.executeUpdate("INSERT INTO Settings VALUES (3,'EnableMailNotification','false')");
 		stat.executeUpdate("INSERT INTO Settings VALUES (4,'TimeToSimulate','60')");
 		stat.executeUpdate("INSERT INTO Settings VALUES (5,'HtmlReports','true')");
 		stat.executeUpdate("INSERT INTO Settings VALUES (6,'RawDataReports','true')");

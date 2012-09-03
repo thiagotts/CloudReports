@@ -19,6 +19,7 @@
 
 package cloudreports.simulation;
 
+import cloudreports.business.SettingBusiness;
 import cloudreports.dao.CustomerRegistryDAO;
 import cloudreports.dao.DatacenterRegistryDAO;
 import cloudreports.dao.SettingDAO;
@@ -94,13 +95,12 @@ public class Simulation implements Runnable {
         CloudSim.startSimulation();
         for (String dbName : dbNames) {
             HibernateUtil.setActiveDatabase(dbName + ".cre");
-            runSimulations();
+            runAllSimulations();
         }
 
         double finishTime = Calendar.getInstance().getTimeInMillis();
         ElapsedTime elapsedTime = new ElapsedTime(finishTime - startTime);
         MainView.getSimulationView().setStateToComplete(elapsedTime);
-        Audio.playAudioFromResource("cloudreports/gui/resources/beep.wav");
         MainView.setStartButtonEnabled(true);
     }
 
@@ -112,102 +112,85 @@ public class Simulation implements Runnable {
      * 
      * @since           1.0
      */       
-    private void runSimulations() {
-        SettingDAO sDAO = new SettingDAO();
-        if (sDAO.getSetting("EnableMailNotification").getValue().equals("1")) {
-            isMailNotificationEnabled = true;
-        } else {
-            isMailNotificationEnabled = false;
-        }
+    private void runAllSimulations() {
+        RemovePreviousReports();
+        isMailNotificationEnabled = SettingBusiness.isMailNotificationEnabled();
+        int numberOfSimulations = SettingBusiness.getNumberOfSimulations();
 
-        int numberOfSimulations = Integer.valueOf(sDAO.getSetting("NumberOfSimulations").getValue());
-        String baseDirectory = FileIO.getPathOfExecutable();
-        File reportsDirectory = new File(baseDirectory + "reports/" + HibernateUtil.getActiveDatabase());
-        if(reportsDirectory.exists()) 
-        	FileIO.deleteDirectory(reportsDirectory);
-        reportsDirectory.mkdirs();
-
-        //Begin of simulations loop
         for (int simulationId = 1; simulationId <= numberOfSimulations; simulationId++) {
-            double currentSimulationStartTime = Calendar.getInstance().getTimeInMillis();
-            Setting currentSimulation = sDAO.getSetting("CurrentSimulation");
-            currentSimulation.setValue(String.valueOf(simulationId));
-            sDAO.updateSetting(currentSimulation);
-
+            SettingBusiness.setCurrentSimulation(simulationId);
             MainView.getSimulationView().setBarLabel("Simulation " + simulationId + " of " + HibernateUtil.getActiveDatabase() + " is in progress...");
-
             Log.setOutput(LogIO.getFileOutputStream());
-            Log.printLine("CloudReports version 1.0");
+            Log.printLine("CloudReports version 1.1");
             Log.print("Verifying available resources...");
 
-            DatacenterRegistryDAO drDAO = new DatacenterRegistryDAO();
-            CustomerRegistryDAO crDAO = new CustomerRegistryDAO();
-
-            for (CustomerRegistry cr : crDAO.getListOfCustomers()) {
-                cr.getUtilizationProfile().setTimeToSend(0);
-                crDAO.updateCustomerRegistry(cr);
-            }
-
+            ResetCustomersTimeToSend();
             if (Verification.verifyVMsDeploymentViability()) {
-                Log.print("OK\n");
-                CloudSim.init(getNumberOfCustomers(), Calendar.getInstance(), false);
-                HashMap<String, PowerDatacenter> datacenters = EntityFactory.createDatacenters(drDAO.getListOfDatacenters());
-                HashMap<String, DatacenterBroker> brokers = EntityFactory.createBrokers(crDAO.getListOfCustomers());
-                if (datacenters == null || brokers == null) {
-                    continue;
-                }
-                EntityFactory.setUpNetworkLinks(datacenters, brokers);
-                try {
-                    //Initiate simulation
-                    Simulation.dataCollector = new DataCollector(datacenters, brokers);
-                    CloudSim.startSimulation();
-
-                    //Generate report
-                    Simulation.dataCollector.flushData();
-                    MainView.getSimulationView().setBarLabel("Generating report " + simulationId + "...");
-                    double currentSimulationFinishTime = Calendar.getInstance().getTimeInMillis();
-                    ElapsedTime elapsedTime = new ElapsedTime(currentSimulationFinishTime - currentSimulationStartTime);
-
-                    List<DatacenterBroker> brokersList = Arrays.asList(brokers.values().toArray(new DatacenterBroker[0]));
-                    List<PowerDatacenter> datacentersList = Arrays.asList(datacenters.values().toArray(new PowerDatacenter[0]));
-                    Report.generateReport(datacentersList, brokersList, elapsedTime);
-
-                    if (hasTerminated()) {
-                        Dialog.showWarning(MainView.getFrames()[0], "Simulation has been abrubtly terminated.");
-                    } else {
-                        //Send mail notification
-                        if (isMailNotificationEnabled) {
-                            Mail.sendMail("Simulation " + simulationId + " of " + HibernateUtil.getActiveDatabase() + " completed.",
-                                    "Simulation " + simulationId + " of " + HibernateUtil.getActiveDatabase() + " has completed in " + elapsedTime.toString() + ".");
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    CloudSim.init(getNumberOfCustomers(), Calendar.getInstance(), false);
-                    CloudSim.startSimulation();
-                    Dialog.showWarning(null, "Simulation has been interrupted.\nReports may have been generated with inconsistent data.");
-
-                    //Send mail notification
-                    if (isMailNotificationEnabled) {
-                        double currentFinishTime = Calendar.getInstance().getTimeInMillis();
-                        ElapsedTime elapsedTime = new ElapsedTime(currentFinishTime - currentSimulationStartTime);
-                        Mail.sendMail("Simulation " + simulationId + " of " + HibernateUtil.getActiveDatabase() + " failed.",
-                                "Simulation " + simulationId + " of " + HibernateUtil.getActiveDatabase() + " has failed after " + elapsedTime.toString() + ":\n\n" + e.getMessage());
-                    }
-
-                    MainView.getSimulationView().dispose();
-                    LogIO.removeTempLogFile();
-                }
+                runSimulation(simulationId);
             } else {
                 Dialog.showErrorMessage(null, "Simulation aborted:\nSome of the virtual machines cannot be deployed by any available host.");
                 MainView.getSimulationView().dispose();
                 break;
             }
-
-            //Remove current log file
             LogIO.removeTempLogFile();
         }
-        //End of simulations loop        
+    }
+    
+    /** 
+     * Runs a round of a simulation.
+     * 
+     * @since           1.1
+     */      
+    private void runSimulation(int simulationId) {
+        Log.print("OK\n");
+        double currentSimulationStartTime = Calendar.getInstance().getTimeInMillis();
+        CloudSim.init(getNumberOfCustomers(), Calendar.getInstance(), false);
+        CloudSim.terminateSimulation(SettingBusiness.getTimeToSimulate()*60);
+        
+        HashMap<String, PowerDatacenter> datacenters = EntityFactory.createDatacenters();
+        HashMap<String, DatacenterBroker> brokers = EntityFactory.createBrokers();
+        if (datacenters == null || brokers == null) return;
+        
+        EntityFactory.setUpNetworkLinks(datacenters, brokers);
+        try {
+            Simulation.dataCollector = new DataCollector(datacenters, brokers);
+            CloudSim.startSimulation();
+
+            Simulation.dataCollector.flushData();
+            MainView.getSimulationView().setBarLabel("Generating report " + simulationId + "...");
+            double currentSimulationFinishTime = Calendar.getInstance().getTimeInMillis();
+            ElapsedTime elapsedTime = new ElapsedTime(currentSimulationFinishTime - currentSimulationStartTime);
+
+            List<DatacenterBroker> brokersList = Arrays.asList(brokers.values().toArray(new DatacenterBroker[0]));
+            List<PowerDatacenter> datacentersList = Arrays.asList(datacenters.values().toArray(new PowerDatacenter[0]));
+            Report.generateReport(datacentersList, brokersList, elapsedTime);
+
+            if (hasTerminated()) {
+                Dialog.showWarning(MainView.getFrames()[0], "Simulation has been abrubtly terminated.");
+            } else {
+                //Send mail notification
+                if (isMailNotificationEnabled) {
+                    Mail.sendMail("Simulation " + simulationId + " of " + HibernateUtil.getActiveDatabase() + " completed.",
+                            "Simulation " + simulationId + " of " + HibernateUtil.getActiveDatabase() + " has completed in " + elapsedTime.toString() + ".");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            CloudSim.init(getNumberOfCustomers(), Calendar.getInstance(), false);
+            CloudSim.startSimulation();
+            Dialog.showWarning(null, "Simulation has been interrupted.\nReports may have been generated with inconsistent data.");
+
+            //Send mail notification
+            if (isMailNotificationEnabled) {
+                double currentFinishTime = Calendar.getInstance().getTimeInMillis();
+                ElapsedTime elapsedTime = new ElapsedTime(currentFinishTime - currentSimulationStartTime);
+                Mail.sendMail("Simulation " + simulationId + " of " + HibernateUtil.getActiveDatabase() + " failed.",
+                        "Simulation " + simulationId + " of " + HibernateUtil.getActiveDatabase() + " has failed after " + elapsedTime.toString() + ":\n\n" + e.getMessage());
+            }
+
+            MainView.getSimulationView().dispose();
+            LogIO.removeTempLogFile();
+        }
     }
 
     /** 
@@ -233,4 +216,28 @@ public class Simulation implements Runnable {
         return crDAO.getNumOfCustomers();
     }
 
+    /** 
+     * Removes reports from previous simulations.
+     * 
+     * @since   1.1
+     */     
+    private void RemovePreviousReports() {                
+        String baseDirectory = FileIO.getPathOfExecutable();
+        File reportsDirectory = new File(baseDirectory + "reports/" + HibernateUtil.getActiveDatabase());
+        if(reportsDirectory.exists()) FileIO.deleteDirectory(reportsDirectory);
+        reportsDirectory.mkdirs();
+    }
+
+    /** 
+     * Resets the time to send cloudlets for all customers.
+     * 
+     * @since   1.1
+     */  
+    private void ResetCustomersTimeToSend() {
+        CustomerRegistryDAO crDAO = new CustomerRegistryDAO();
+        for (CustomerRegistry cr : crDAO.getListOfCustomers()) {
+            cr.getUtilizationProfile().setTimeToSend(0);
+            crDAO.updateCustomerRegistry(cr);
+        }
+    }
 }
