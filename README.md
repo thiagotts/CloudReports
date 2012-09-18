@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/thiagotts/CloudReports.png)](http://travis-ci.org/thiagotts/CloudReports)
+
 ![logo] (http://dl.dropbox.com/u/737234/CloudReports/cloudreportslogo.png)
 
 CloudReports is a graphic tool that simulates distributed computing environments based
