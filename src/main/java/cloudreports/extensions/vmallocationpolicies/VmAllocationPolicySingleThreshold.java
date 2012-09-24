@@ -54,9 +54,7 @@ public class VmAllocationPolicySingleThreshold extends VmAllocationPolicySimple 
      * @param   utilizationThreshold    the utilization threshold value.
      * @since                           1.0
      */         
-    public VmAllocationPolicySingleThreshold(List<? extends PowerHost> list, 
-                                             double utilizationThreshold) {
-        
+    public VmAllocationPolicySingleThreshold(List<? extends PowerHost> list, double utilizationThreshold) {
         super(list);
         this.upperUtilizationThreshold = utilizationThreshold;
     }
@@ -95,7 +93,6 @@ public class VmAllocationPolicySingleThreshold extends VmAllocationPolicySimple 
      * @param   overusedHosts   the list of overused hosts.
      * @since                   1.0
      */    
-    @Override
     public void distributeVms(List<Migration> migrationList, List<PowerHost> overusedHosts) {
         List<PowerHost> targetHosts = getNotOverusedHosts();
         
@@ -118,7 +115,6 @@ public class VmAllocationPolicySingleThreshold extends VmAllocationPolicySimple 
      * @param   migrationList   the list of migrations to be executed.
      * @since                   1.0
      */      
-    @Override
     public void consolidateVms(List<Migration> migrationList) {
         List<PowerHost> activeHosts = getActiveHosts();        
         List<PowerHost> targetHosts = activeHosts;
@@ -140,7 +136,6 @@ public class VmAllocationPolicySingleThreshold extends VmAllocationPolicySimple 
         }
     }
 
-    @Override
     public double getUpperUtilizationThreshold() {
         return this.upperUtilizationThreshold;
     }

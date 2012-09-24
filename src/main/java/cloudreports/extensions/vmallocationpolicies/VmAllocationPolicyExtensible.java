@@ -23,7 +23,6 @@ import cloudreports.enums.AllocationPolicy;
 import cloudreports.models.Migration;
 import java.util.*;
 import org.cloudbus.cloudsim.Vm;
-import org.cloudbus.cloudsim.power.PowerHost;
 
 /**
  * A subtype of CloudSim's VmAllocationPolicySimple class.
@@ -37,15 +36,6 @@ import org.cloudbus.cloudsim.power.PowerHost;
 public interface VmAllocationPolicyExtensible  {
     
     /** 
-     * A method whose implementations must return the upper utilization
-     * threshold.
-     *
-     * @return  the upper utilization threshold.
-     * @since   1.1
-     */   
-    double getUpperUtilizationThreshold();
-    
-    /** 
      * A method whose implementations must optimize the allocation
      * of virtual machines.
      *
@@ -55,24 +45,5 @@ public interface VmAllocationPolicyExtensible  {
      * @since   1.1
      */      
     List<Migration> getListOfMigrationsToBeExecuted(List<? extends Vm> vmList);
-
-    /** 
-     * A method whose implementations must distribute virtual machines
-     * among hosts.
-     *
-     * @param   migrationList   a list of migrations to be executed. 
-     * @param   overusedHosts   a list of overused hosts.
-     * @since                   1.1
-     */        
-    void distributeVms(List<Migration> migrationList, List<PowerHost> overusedHosts);
-    
-    /** 
-     * A method whose implementations must consolidate the allocation
-     * of virtual machines among hosts.
-     *
-     * @param   migrationList   a list of migrations to be executed. 
-     * @since                   1.1
-     */         
-    void consolidateVms(List<Migration> migrationList);    
     
 }

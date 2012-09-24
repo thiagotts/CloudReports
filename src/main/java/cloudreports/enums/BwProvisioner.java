@@ -39,7 +39,7 @@ public enum BwProvisioner {
      */      
     SIMPLE {
         @Override
-        public org.cloudbus.cloudsim.provisioners.BwProvisioner getProvisioner(int num, String provisionerAlias) {
+        public org.cloudbus.cloudsim.provisioners.BwProvisioner getProvisioner(long num, String provisionerAlias) {
             return new BwProvisionerSimple(num);
         }
     },
@@ -49,9 +49,9 @@ public enum BwProvisioner {
      */     
     EXTENSION {
         @Override
-        public org.cloudbus.cloudsim.provisioners.BwProvisioner getProvisioner(int num, String provisionerAlias) {
+        public org.cloudbus.cloudsim.provisioners.BwProvisioner getProvisioner(long num, String provisionerAlias) {
             try {
-                Class<?>[] types = new Class<?>[]{int.class};
+                Class<?>[] types = new Class<?>[]{long.class};
                 Object[] arguments = new Object[]{num};
                 return (org.cloudbus.cloudsim.provisioners.BwProvisioner) ExtensionsLoader.getExtension("BwProvisioner", provisionerAlias, types, arguments);
             } catch (Exception e) {
@@ -69,7 +69,7 @@ public enum BwProvisioner {
      * @return                      a CloudSim's BwProvisioner subtype.
      * @since                       1.0
      */     
-    public abstract org.cloudbus.cloudsim.provisioners.BwProvisioner getProvisioner(int num, String provisionerAlias);
+    public abstract org.cloudbus.cloudsim.provisioners.BwProvisioner getProvisioner(long num, String provisionerAlias);
 
     /** 
      * Gets an instance of bandwidth provisioner based on its alias.

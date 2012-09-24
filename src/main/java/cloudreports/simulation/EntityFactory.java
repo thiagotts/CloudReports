@@ -86,7 +86,11 @@ public class EntityFactory {
 
 
             try {
-                VmAllocationPolicy allocationPolicy = AllocationPolicy.getInstance(dcr.getAllocationPolicyAlias()).getPolicy(hostList, dcr.getUpperUtilizationThreshold(), dcr.getAllocationPolicyAlias());
+                AllocationPolicy instance = AllocationPolicy.getInstance(dcr.getAllocationPolicyAlias());
+                VmAllocationPolicy allocationPolicy = instance.getPolicy(hostList, dcr.getUpperUtilizationThreshold(),
+                                                                         dcr.getLowerUtilizationThreshold(),
+                                                                         dcr.getSchedulingInterval(),
+                                                                         dcr.getAllocationPolicyAlias());
                 if (allocationPolicy == null) {
                     Dialog.showErrorMessage(null, "Error loading \"" + dcr.getAllocationPolicyAlias() + "\" allocation policy.");
                     return null;
@@ -94,7 +98,7 @@ public class EntityFactory {
 
                 PowerDatacenter newDC = new PowerDatacenter(dcr.getName(),
                         chars,
-                        AllocationPolicy.getInstance(dcr.getAllocationPolicyAlias()).getPolicy(hostList, dcr.getUpperUtilizationThreshold(), dcr.getAllocationPolicyAlias()),
+                        allocationPolicy,
                         storageList,
                         dcr.getSchedulingInterval(),
                         dcr.getMonitoringInterval());

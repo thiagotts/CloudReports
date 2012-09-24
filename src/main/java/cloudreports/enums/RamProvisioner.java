@@ -40,8 +40,8 @@ public enum RamProvisioner {
      */     
     SIMPLE {
         @Override
-        public org.cloudbus.cloudsim.provisioners.RamProvisioner getProvisioner(int avaiableRam, String provisionerAlias) {
-            return new RamProvisionerSimple(avaiableRam);
+        public org.cloudbus.cloudsim.provisioners.RamProvisioner getProvisioner(int availableRam, String provisionerAlias) {
+            return new RamProvisionerSimple(availableRam);
         }
     },
     

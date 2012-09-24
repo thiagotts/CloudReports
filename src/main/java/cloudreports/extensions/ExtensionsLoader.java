@@ -117,7 +117,7 @@ public class ExtensionsLoader {
         	}
         	catch (NullPointerException e) {
         		continue;
-			}
+                }
         }
         
         return listAliases;
@@ -172,7 +172,7 @@ public class ExtensionsLoader {
     private static String getFileName(String type, String alias) {
         if(classnamesXml == null) return null;
         
-        NodeList classNodes = classnamesXml.getElementsByTagName("class");            
+        NodeList classNodes = classnamesXml.getElementsByTagName("class");      
         for(int index = 0; index < classNodes.getLength(); index++) {
             if(classNodes.item(index).getAttributes().getNamedItem("type").getNodeValue().equals(type) &&
                classNodes.item(index).getAttributes().getNamedItem("alias").getNodeValue().equals(alias))
@@ -215,7 +215,9 @@ public class ExtensionsLoader {
      */      
     private static Document getClassnamesXml() {
         File classnamesXmlFile = new File(classnamesXmlPath);
-        if(!classnamesXmlFile.exists() || !classnamesXmlFile.isFile()) return null;
+        if(!classnamesXmlFile.exists() || !classnamesXmlFile.isFile()) {
+            return null;
+        }
         
         DocumentBuilder db;
         try {

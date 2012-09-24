@@ -45,8 +45,10 @@ public enum AllocationPolicy implements Serializable {
      */
     SINGLE_THRESHOLD {
         @Override
-        public VmAllocationPolicy getPolicy(List<PowerHost> hostList, double upperUtilizationThreshold, String policyAlias) {
-            return new VmAllocationPolicySingleThreshold(hostList,upperUtilizationThreshold);
+        public VmAllocationPolicy getPolicy(List<PowerHost> hostList, double upperUtilizationThreshold, 
+                                            double lowerUtilizationThreshold, double schedulingInterval,
+                                            String policyAlias) {
+            return new VmAllocationPolicySingleThreshold(hostList, upperUtilizationThreshold);
         }
     },
     
@@ -55,10 +57,12 @@ public enum AllocationPolicy implements Serializable {
      */
     EXTENSION {
         @Override
-        public VmAllocationPolicy getPolicy(List<PowerHost> hostList, double upperUtilizationThreshold, String policyAlias) {
+        public VmAllocationPolicy getPolicy(List<PowerHost> hostList, double upperUtilizationThreshold, 
+                                            double lowerUtilizationThreshold, double schedulingInterval,
+                                            String policyAlias) {
             try{
-                Class<?>[] types = new Class<?>[]{ List.class, double.class };
-                Object[] arguments = new Object[]{ hostList, upperUtilizationThreshold };
+                Class<?>[] types = new Class<?>[]{ List.class, double.class, double.class, double.class };
+                Object[] arguments = new Object[]{ hostList, upperUtilizationThreshold, lowerUtilizationThreshold, schedulingInterval};
                 return (VmAllocationPolicy) ExtensionsLoader.getExtension("VmAllocationPolicy", policyAlias, types, arguments);
             }
             catch(Exception e) {
@@ -79,7 +83,9 @@ public enum AllocationPolicy implements Serializable {
      * @return                              a CloudSim's VmAllocationPolicy subtype.
      * @since                               1.0
      */    
-    public abstract VmAllocationPolicy getPolicy(List<PowerHost> hostList, double upperUtilizationThreshold, String policyAlias);
+    public abstract VmAllocationPolicy getPolicy(List<PowerHost> hostList, double upperUtilizationThreshold, 
+                                                 double lowerUtilizationThreshold, double schedulingInterval,
+                                                 String policyAlias);
     
     /** 
      * Gets an instance of an allocation policy based on its alias.
