@@ -14,17 +14,17 @@
 			<id>maven-repository.dev.java.net</id>
 			<url>http://download.java.net/maven/1</url>
 		</repository>
-  		<repository>
-        		<id>maven2-repository.dev.java.net</id>
-        		<name>Java.net Repository for Maven</name>
-        		<url>http://download.java.net/maven/2</url>
-		        <layout>default</layout>
-		        <snapshots>
-            			<enabled>false</enabled>
-		        </snapshots>
-		        <releases>
-		            <enabled>true</enabled>
-		        </releases>
+		<repository>
+			<id>maven2-repository.dev.java.net</id>
+			<name>Java.net Repository for Maven</name>
+			<url>http://download.java.net/maven/2</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
 		</repository>
 		<repository>
 			<id>EclipseLink Repo</id>
@@ -32,10 +32,6 @@
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-		</repository>
-		<repository>
-			<id>anydoby.com</id>
-			<url>http://anydoby.com/maven</url>
 		</repository>
 		<repository>
 			<id>project-local-repo</id>
@@ -94,12 +90,6 @@
 			<version>3.6.16</version>
 		</dependency>
 	</dependencies>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>anydoby.com</id>
-			<url>http://anydoby.com/maven</url>
-		</pluginRepository>
-	</pluginRepositories>
 	<build>
 		<finalName>CloudReports</finalName>
 		<defaultGoal>package</defaultGoal>
@@ -181,16 +171,38 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>com.anydoby</groupId>
-				<artifactId>fatjar-maven-plugin</artifactId>
-				<version>0.0.2</version>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<mainClass>cloudreports.gui.MainView</mainClass>
+						</manifest>
+						<manifestEntries>
+							<Implementation-Build>${buildNumber}</Implementation-Build>
+							<mode>development</mode>
+							<SplashScreen-Image>cloudreports/gui/resources/splash.png</SplashScreen-Image>
+						</manifestEntries>
+					</archive>
+				</configuration>
 				<executions>
 					<execution>
-						<id>pre-jar</id>
+						<id>make-assembly</id>
 						<phase>package</phase>
 						<goals>
-							<goal>prepare-jars</goal>
+							<goal>single</goal>
 						</goals>
+						<configuration>
+							<appendAssemblyId>false</appendAssemblyId>
+							<finalName>${project.finalName}</finalName>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+							<attach>true</attach>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
