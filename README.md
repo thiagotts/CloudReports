@@ -84,21 +84,9 @@ CloudReports' source code. Currently, the following types of algorithms can be d
 
 For more information, visit the [wiki page about developing extensions][extensionswiki].
 
-## Upcoming features
+## Publications
 
-- Intra-datacenter networks.
-- A better management of multiple environments.
-- Possibility to select what kind of data you want on the reports.
-- More types of extensions.
-- The ones you are going to develop.
-
-## Contributing
-
-1. Fork it.
-2. Create your feature branch (`git checkout -b my-new-feature`).
-3. Commit your changes (`git commit -am 'Added some feature'`).
-4. Push to the branch (`git push origin my-new-feature`).
-5. Create new Pull Request.
+**[CloudReports: An Extensible Simulation Tool for Energy-Aware Cloud Computing Environments](http://link.springer.com/chapter/10.1007/978-3-319-10530-7_6#)** - *Cloud Computing - Challenges, Limitations and R&D Solutions. Springer International Publishing*.
 
 ## License
 
