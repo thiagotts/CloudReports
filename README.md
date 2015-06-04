@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/thiagotts/CloudReports.png)](http://travis-ci.org/thiagotts/CloudReports)
+[![Build Status](https://secure.travis-ci.org/thiagotts/CloudReports.png)](http://travis-ci.org/thiagotts/CloudReports) [![DOI](https://zenodo.org/badge/13678/thiagotts/CloudReports.svg)](http://dx.doi.org/10.5281/zenodo.18297)
 
 ![logo] (http://dl.dropbox.com/u/737234/CloudReports/cloudreportslogo.png)
 
