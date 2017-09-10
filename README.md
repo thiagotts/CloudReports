@@ -1,6 +1,8 @@
 [![Build Status](https://secure.travis-ci.org/thiagotts/CloudReports.png)](http://travis-ci.org/thiagotts/CloudReports) [![DOI](https://zenodo.org/badge/13678/thiagotts/CloudReports.svg)](http://dx.doi.org/10.5281/zenodo.18297)
 
-![logo] (http://dl.dropbox.com/u/737234/CloudReports/cloudreportslogo.png)
+<p align="center">
+  <img src="https://s3.amazonaws.com/tts.files/cloudreportslogo.png" alt="ShowMyGitBranch example"/>
+</p>
 
 CloudReports is a graphic tool that simulates distributed computing environments based
 on the Cloud Computing paradigm. It uses [CloudSim][cloudsim] as its simulation
@@ -24,7 +26,9 @@ can be easily imported by third-party applications such as Octave or MATLAB.
 
 Here's a screenshot of CloudReports's GUI:
 
-![preview] (http://dl.dropbox.com/u/737234/CloudReports/crscreenshot.png)
+<p align="center">
+  <img src="https://s3.amazonaws.com/tts.files/crscreenshot.png" alt="ShowMyGitBranch example"/>
+</p>
 
 
 ## Running CloudReports
